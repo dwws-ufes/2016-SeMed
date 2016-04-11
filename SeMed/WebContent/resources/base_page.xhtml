@@ -1,0 +1,201 @@
+<!-- <?xml version="1.0" encoding="ISO-8859-1" ?> -->
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> -->
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head class="no-js">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title><ui:insert name="title"></ui:insert> </title>
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width" />
+
+	<!-- Bootstrap Stylesheet -->
+	<link rel="stylesheet"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/bootstrap.min.css" />
+
+	<!-- Animate -->
+	<link rel="stylesheet"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/animate.min.css" />
+
+	<!-- Google Fonts -->
+	<link
+		href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800'
+		rel='stylesheet' type='text/css' />
+
+	<!-- FontAwesome Icons -->
+	<link rel="stylesheet"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/font-awesome.min.css" />
+
+	<!-- Normailize Stylesheet -->
+	<link rel="stylesheet"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/normalize.min.css" />
+
+	<!-- Main Styles -->
+	<link rel="stylesheet"
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/templatemo_style.css" />
+
+	<script
+		src="#{facesContext.externalContext.requestContextPath}/resources/js/vendor/modernizr-2.6.2.min.js"></script>
+</h:head>
+
+<h:body>
+
+	<div id="responsive-menu">
+		<ul class="menu-holder">
+			<li><a href="#"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="#"><i class="fa fa-cogs"></i>Link 01</a></li>
+			<li><a href="#"><i class="fa fa-list"></i>Link 02</a></li>
+			<li><a href="#"><i class="fa fa-list"></i>Link 03</a></li>
+			<li><a href="#"><i class="fa fa-list"></i>Link 04</a></li>
+		</ul>
+	</div>
+
+	<!-- HEADER -->
+	<header class="site-header">
+		<div class="container">
+			<div class="row">
+				<div class="menu-holder">
+					<div class="col-md-3 col-sm-2 logo">
+						<a href="#" title="templatemo 420 ocean"> <img
+							src="#{facesContext.externalContext.requestContextPath}/resources/images/templatemo-logo.png"
+							alt="templatemo 420 ocean"/></a>
+					</div>
+					<div class="col-md-7 col-sm-8">
+						<nav class="main-menu hidden-xs">
+							<ul>
+								<li><a href="#">Home</a></li>
+								<li><a href="#">Link 01</a></li>
+								<li><a href="#">Link 02</a></li>
+								<li><a href="#">Link 03</a></li>
+								<li><a href="#">Link 04</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+
+
+				<div class="text-right visible-xs">
+					<a href="#" id="mobile_menu"><span class="fa fa-bars"></span></a>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- .site-header -->
+
+
+	<!-- TOP CONTENT -->
+	<div class="top-c">
+		<div class="container">
+			<div class="row">
+				<h:form>
+					<h:panelGrid columns="3" cellpadding="5">
+						<h:outputLabel for="menu" value="Location:" />
+						<p:selectCheckboxMenu id="menu"
+							value="#{checkboxView.selectedCities}" label="Cities"
+							filter="true" filterMatchMode="startsWith"
+							panelStyle="width:250px">
+							<f:selectItems value="#{checkboxView.cities}" />
+						</p:selectCheckboxMenu>
+						<p:commandLink value="Submit" update="display" />
+					</h:panelGrid>
+
+					<p:outputPanel id="display"
+						style="width:250px;padding-left:5px;margin-top:10px">
+						<p:dataList value="#{checkboxView.selectedCities}" var="city"
+							emptyMessage="No cities selected">
+	            			#{city}
+	        			</p:dataList>
+					</p:outputPanel>
+				</h:form>
+					<ui:insert name="first_content_level"/>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- SECOND CONTENT LEVEL -->
+	<div class="content-section" id="services">
+		<div class="container">
+			<div class="row">
+				<ui:insert name="second_content_level"/>
+			</div>
+			<!-- .row -->
+		</div>
+		<!-- .container -->
+	</div>
+	<!-- #services -->
+
+
+	<!-- PRODUCTS -->
+	<div class="content-section" id="products">
+		<div class="container">
+			<div class="row">
+				<ui:insert name="third_content_level"/>
+			</div>
+		</div>
+	</div>
+	<!-- #products -->
+
+
+	<!-- VIDEO FEATURe -->
+	<div id="video" class="video-feature content-section">
+		<div class="container">
+			<div class="row">
+				<ui:insert name="fourth_content_level"/>
+			</div>
+			<!-- .row -->
+		</div>
+		<!-- .container -->
+	</div>
+	<!-- .video-feature -->
+
+
+	<!-- CONTACT -->
+	<div class="content-section" id="contact">
+		<div class="container">
+			<div class="row">
+				<ui:insert name="fifth_content_level"/>
+			</div>
+			<!-- .row -->
+		</div>
+		<!-- .container -->
+	</div>
+	<!-- #contact -->
+
+
+	<!-- FOOTER -->
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 text-right">
+					<a href="http://www.github.com/claudenirmf" target="_blank" rel="author">Claudenir Fonseca</a> <br/>
+					<a href="http://www.github.com/guylerme" target="_blank" rel="author">Guylerme Figueiredo</a>
+				</div>
+				<!-- .col-md-12 -->
+			</div>
+			<!-- .row -->
+		</div>
+		<!-- .container -->
+	</footer>
+	<!-- .site-footer -->
+
+
+	<script src="#{facesContext.externalContext.requestContextPath}/resources/js/vendor/jquery-1.10.1.min.js"></script>
+<!-- 	<h:outputScript> -->
+<!-- 		window.jQuery -->
+<!-- 				|| document -->
+<!-- 						.write('<h:outputScript src="#{facesContext.externalContext.requestContextPath}/resources/js/vendor/jquery-1.10.1.min.js" />') -->
+<!-- 	</h:outputScript> -->
+
+	<script src="#{facesContext.externalContext.requestContextPath}/resources/js/bootstrap.min.js"></script>
+	<script src="#{facesContext.externalContext.requestContextPath}/resources/js/plugins.js"></script>
+	<script src="#{facesContext.externalContext.requestContextPath}/resources/js/templatemo_custom.js"></script>
+
+</h:body>
+
+</html>
