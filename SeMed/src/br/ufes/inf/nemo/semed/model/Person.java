@@ -19,6 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.ufes.inf.nemo.semed.exception.InvalidCpfException;
+import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 
 /**
  * @author Guylerme Figueiredo
@@ -27,10 +28,10 @@ import br.ufes.inf.nemo.semed.exception.InvalidCpfException;
 
 @MappedSuperclass
 @Inheritance(strategy=InheritanceType.JOINED)
-public abstract class Person {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+public abstract class Person extends PersistentObjectSupport implements Comparable<Person>{
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	private long id;
 	private String firstName;
 	private String surname;
 	private String cpf;
@@ -44,13 +45,16 @@ public abstract class Person {
 	@OneToOne
 	private Address address;
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
+//	@Override
+//	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+//	public Long getId() {
+//		return super.getId();
+//	}
+//
+//	@Override
+//	public void setId(Long id) {
+//		super.setId(id);
+//	}
 
 	public String getFirstName() {
 		return firstName;
@@ -106,7 +110,8 @@ public abstract class Person {
 	@Override
 	public int hashCode() {
 		int result = 0;
-		result = 31 * result + (int) id;
+//		result = 31 * result + (int) id;
+		result = 31 * result + getId().intValue();
 		result = 31 * result + (cpf != null ? cpf.hashCode() : 0);
 
 		return result;
@@ -123,8 +128,15 @@ public abstract class Person {
 		}
 
 		Person guest = (Person) other;
-		return (this.id == guest.id)
+		return (this.getId() == guest.getId())
 				&& (this.cpf != null && cpf.equals(guest.cpf));
+	}
+	
+	@Override
+	public int compareTo(Person p){
+		if(this.equals(p)) return 0;
+		
+		return getUuid().compareTo(p.getUuid());
 	}
 
 	private boolean validateCpf(String cpf) {

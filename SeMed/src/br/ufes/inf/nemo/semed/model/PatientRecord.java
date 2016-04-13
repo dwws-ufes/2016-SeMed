@@ -14,13 +14,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
+
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
-public class PatientRecord {
+public class PatientRecord extends PersistentObjectSupport implements Comparable<PatientRecord> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	private long id;
 
 	@Temporal(TemporalType.DATE)
 	private Date date;
@@ -36,13 +38,13 @@ public class PatientRecord {
 	@OneToMany
 	Set<MedicalRecordItem> medicalRecordItens;
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
+//	public long getId() {
+//		return id;
+//	}
+//
+//	public void setId(long id) {
+//		this.id = id;
+//	}
 
 	public Date getDate() {
 		return date;
@@ -82,6 +84,11 @@ public class PatientRecord {
 
 	public void setMedicalRecordItens(Set<MedicalRecordItem> medicalRecordItens) {
 		this.medicalRecordItens = medicalRecordItens;
+	}
+
+	@Override
+	public int compareTo(PatientRecord o) {
+		return getUuid().compareTo(o.getUuid());
 	}
 
 }

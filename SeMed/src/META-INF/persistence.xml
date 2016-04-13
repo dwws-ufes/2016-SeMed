@@ -3,6 +3,19 @@
 	<persistence-unit name="SeMed">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:/jboss/datasources/SeMed</jta-data-source>
+		<class>br.ufes.inf.nemo.util.ejb3.domain.DomainObjectSupport</class>
+		<class>br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport</class>
+		<class>br.ufes.inf.nemo.semed.model.Address</class>
+		<class>br.ufes.inf.nemo.semed.model.ClosingReport</class>
+		<class>br.ufes.inf.nemo.semed.model.Contact</class>
+		<class>br.ufes.inf.nemo.semed.model.Doctor</class>
+		<class>br.ufes.inf.nemo.semed.model.ExaminationReport</class>
+		<class>br.ufes.inf.nemo.semed.model.Manager</class>
+		<class>br.ufes.inf.nemo.semed.model.MedicalPrescription</class>
+		<class>br.ufes.inf.nemo.semed.model.MedicalRecordItem</class>
+		<class>br.ufes.inf.nemo.semed.model.Patient</class>
+		<class>br.ufes.inf.nemo.semed.model.PatientRecord</class>
+		<class>br.ufes.inf.nemo.semed.model.Person</class>
 		<properties>
 			<!-- Properties for Hibernate -->
 			<property name="hibernate.hbm2ddl.auto" value="update" />
