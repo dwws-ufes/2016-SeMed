@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Patient Register Page</title>
+</h:head>
+
+<h:body>
+	<h1>Welcome to Patient's Register</h1>
+	<h:form id="form">
+		<h:panelGroup id="streetField">
+			<h:outputText value="First name: " /> <br/>
+			<p:inputText id="street"
+				value="#{manageAddressController.selectedEntity.street}" size="50" 
+				required="true" disabled="#{manageAddressController.readOnly}">
+				<p:ajax event="blur" update="streetField"/>
+			</p:inputText>
+		</h:panelGroup>
+		<h:commandButton value="Save" action="#{manageAddressController.save}" />
+
+
+	</h:form>
+</h:body>
+</html>
