@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	template="/resources/default/decorator.xhtml">
+
+	<ui:define name="title">
+		<h:outputText value="Manage Patient" />
+	</ui:define>
+	<ui:define name="breadcrumb">
+		<li><a
+			href="#{facesContext.externalContext.requestContextPath}/index.faces"><i
+				class="fa fa-home"></i> Home</a></li>
+		<li class="active"><i class="fa fa-user"></i> <h:outputText
+				value="Manage Patient" /></li>
+	</ui:define>
+
+	<ui:define name="body">
+		<!-- The listing form. -->
+		<ui:decorate template="/resources/sae/form.xhtml">
+			<ui:param name="formName" value="Patients List" />
+			<h:form id="filterForm" pt:class="form-horizontal">
+				<h:panelGroup id="filterBar"
+					rendered="#{(not empty managePatientController.filters)}">
+					<div class="form-group">
+						<div class="col-sm-3">
+							<h:selectOneMenu styleClass="form-control"
+								value="#{managePatientController.filterKey}" id="filter"
+								required="true">
+								<f:selectItems value="#{managePatientController.filters}"
+									var="filter" itemLabel="#{filter.label}"
+									itemValue="#{filter.key}" />
+								<f:ajax event="change" execute="@form"
+									listener="#{managePatientController.changeFilter}"
+									render="@form :listingForm" />
+							</h:selectOneMenu>
+						</div>
+						<div class="col-sm-4">
+							<h:selectOneMenu styleClass="form-control" required="false"
+								value="#{managePatientController.filterParam}" id="filterSelect"
+								rendered="#{managePatientController.filter.options != null}">
+								<f:selectItems
+									value="#{managePatientController.filter.reversedOptionsLabels}" />
+							</h:selectOneMenu>
+							<p:inputText pt:class="form-control" placeholder="Place holder?"
+								id="filterText" required="false"
+								value="#{managePatientController.filterParam}"
+								rendered="#{managePatientController.filter.options == null}" />
+						</div>
+						<div class="col-sm-2">
+							<a class="btn btn-block btn-info btn-social" jsf:process="@form"
+								jsf:action="#{managePatientController.filter}"
+								jsf:update=":listingForm @form"> <i class="fa fa-search"></i>
+								<h:outputText value="Filter" />
+							</a>
+						</div>
+						<div class="col-sm-3"
+							jsf:rendered="#{managePatientController.filtering}">
+							<a class="btn btn-block btn-danger btn-social"
+								jsf:process="@form"
+								jsf:action="#{managePatientController.cancelFilter}"
+								jsf:update=":listingForm @form"> <i class="fa fa-close"></i>
+								<h:outputText value="Remove Filter" />
+							</a>
+						</div>
+					</div>
+				</h:panelGroup>
+			</h:form>
+
+			<h:form id="listingForm" style="margin-bottom: 25px">
+				<p:dataTable widgetVar="listingTable" rowIndexVar="rowIndex"
+					tableStyleClass="table table-bordered table-striped"
+					value="#{managePatientController.lazyEntities}" var="entity"
+					rows="#{managePatientController.maxDataTableRowsPerPage}"
+					rowsPerPageTemplate="#{managePatientController.halfMaxDataTableRowsPerPage},#{managePatientController.maxDataTableRowsPerPage},#{managePatientController.doubleMaxDataTableRowsPerPage}"
+					paginator="true" lazy="true"
+					selection="#{managePatientController.selectedEntity}"
+					selectionMode="single"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					paginatorPosition="bottom"
+					loadingMessage="Loading"
+					emptyMessage="Empty">
+					
+
+					<p:column headerText="Name"
+						style="text-align: center; width:50%;">
+						<h:outputText value="#{entity.firstName}" />
+					</p:column>
+
+					<p:column headerText="Surname"
+						style="text-align: center;">
+						<h:outputText value="#{entity.surname}" />
+					</p:column>
+
+					<p:ajax event="rowSelect" update=":buttonsForm" />
+				</p:dataTable>
+			</h:form>
+
+
+			<!-- Buttons shown below the listing. -->
+			<h:form id="buttonsForm">
+				<ui:decorate template="/resources/sae/formbutton.xhtml">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-3" style="margin-bottom: 15px">
+								<a class="btn btn-block btn-success btn-social"
+									jsf:action="#{managePatientController.create}"> <i
+									class="fa fa-user-plus"></i> <h:outputText
+										value="Create" />
+								</a>
+							</div>
+							<div class="col-sm-3" style="margin-bottom: 15px"
+								jsf:rendered="#{managePatientController.selectedEntity != null}">
+								<a class="btn btn-block btn-info btn-social"
+									jsf:action="#{managePatientController.retrieve}"
+									jsf:disabled="#{managePatientController.selectedEntity == null}">
+									<i class="fa  fa-file-text"></i> <h:outputText
+										value="Retrieve" />
+								</a>
+							</div>
+							<div class="col-sm-3" style="margin-bottom: 15px"
+								jsf:rendered="#{managePatientController.selectedEntity != null}">
+								<a class="btn btn-block btn-warning btn-social"
+									jsf:action="#{managePatientController.update}"
+									jsf:disabled="#{managePatientController.selectedEntity == null}"><i
+									class="fa  fa-refresh"> </i> <h:outputText
+										value="#Update" /> </a>
+							</div>
+							<div class="col-sm-3"
+								jsf:rendered="#{managePatientController.selectedEntity != null}">
+								<a class="btn btn-block btn-danger btn-social"
+									jsf:action="#{managePatientController.trash}"
+									jsf:disabled="#{managePatientController.selectedEntity == null}"
+									jsf:process="@this" jsf:update=":trashForm"> <i
+									class="fa  fa-trash-o"></i> <h:outputText
+										value="Delete" />
+								</a>
+							</div>
+						</div>
+					</div>
+				</ui:decorate>
+			</h:form>
+		</ui:decorate>
+		<!-- DEFINE FORM. -->
+
+
+
+
+
+
+
+
+
+
+	</ui:define>
+	<!-- DEFINE BODY. -->
+</ui:composition>
