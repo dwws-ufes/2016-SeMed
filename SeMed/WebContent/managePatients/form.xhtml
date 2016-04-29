@@ -1,0 +1,236 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/resources/templates/default/decorator.xhtml">
+
+	<ui:define name="title">
+		<h:outputText value="#{msgs['manageSemesters.title.create']}"
+			rendered="#{(! managePatientsController.readOnly) and (managePatientsController.selectedEntity.id == null)}" />
+		<h:outputText value="#{msgs['manageSemesters.title.update']}"
+			rendered="#{(! managePatientsController.readOnly) and (managePatientsController.selectedEntity.id != null)}" />
+		<h:outputText value="#{msgs['manageSemesters.title.retrieve']}"
+			rendered="#{managePatientsController.readOnly}" />
+	</ui:define>
+
+	<ui:define name="body">
+		<h1>
+			<h:outputText value="#{msgs['manageSemesters.title.create']}"
+				rendered="#{(! managePatientsController.readOnly) and (managePatientsController.selectedEntity.id == null)}" />
+			<h:outputText value="#{msgs['manageSemesters.title.update']}"
+				rendered="#{(! managePatientsController.readOnly) and (managePatientsController.selectedEntity.id != null)}" />
+			<h:outputText value="#{msgs['manageSemesters.title.retrieve']}"
+				rendered="#{managePatientsController.readOnly}" />
+		</h1>
+
+		<div class="crud">
+			<ui:decorate template="/resources/templates/default/form.xhtml">
+				<h:form id="form">
+					<p:hotkey bind="#{msgs['crud.hotkey.focusFirstField']}"
+						handler="findObjectById('form:firstName').focus();" />
+
+					<h:panelGroup id="firstNameField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:firstName" />
+							<ui:param name="tooltip" value="First Name" />
+							<ui:define name="label">
+								<h:outputText value="First Name" />
+							</ui:define>
+							<p:inputText id="firstName"
+								value="#{managePatientsController.selectedEntity.firstName}"
+								size="50" required="true"
+								disabled="#{managePatientsController.readOnly}">
+								<p:ajax event="blur" update="firstNameField" />
+							</p:inputText>
+						</ui:decorate>
+					</h:panelGroup>
+					<h:panelGroup id="surnameField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:surname" />
+							<ui:param name="tooltip" value="Surname" />
+							<ui:define name="label">
+								<h:outputText value="Surname" />
+							</ui:define>
+							<p:inputText id="surname"
+								value="#{managePatientsController.selectedEntity.surname}"
+								size="50" required="true"
+								disabled="#{managePatientsController.readOnly}">
+								<p:ajax event="blur" update="surnameField" />
+							</p:inputText>
+						</ui:decorate>
+					</h:panelGroup>
+					<h:panelGroup id="cpfField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:cpf" />
+							<ui:param name="tooltip" value="CPF" />
+							<ui:define name="label">
+								<h:outputText value="CPF" />
+							</ui:define>
+							<p:inputText id="cpf"
+								value="#{managePatientsController.selectedEntity.cpf}" size="50"
+								required="false" disabled="#{managePatientsController.readOnly}">
+								<p:ajax event="blur" update="cpfField" />
+							</p:inputText>
+						</ui:decorate>
+					</h:panelGroup>
+					<h:panelGroup id="birthDateField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:birthDate" />
+							<ui:param name="tooltip" value="Birth Date" />
+							<ui:define name="label">
+								<h:outputText value="Birth Date" />
+							</ui:define>
+							<p:inputMask id="birthDate"
+								mask="#{msgs['format.date.primefaces']}"
+								value="#{managePatientsController.selectedEntity.birthDate}"
+								size="50" required="true"
+								disabled="#{managePatientsController.readOnly}">
+								<p:ajax event="blur" update="birthDateField" />
+								<f:convertDateTime type="date"
+									pattern="#{msgs['format.date.java']}" />
+								<h:outputText value=" (#{msgs['format.date.label']})" />
+							</p:inputMask>
+						</ui:decorate>
+					</h:panelGroup>
+					<h:panelGroup id="streetField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:street" />
+							<ui:param name="tooltip" value="Street" />
+							<ui:define name="label">
+								<h:outputText value="Street" />
+							</ui:define>
+							<p:inputText id="street"
+								value="#{managePatientsController.selectedEntity.address.street}" size="50"
+								required="false" disabled="#{managePatientsController.readOnly}">
+								<p:ajax event="blur" update="streetField" />
+							</p:inputText>
+						</ui:decorate>
+					</h:panelGroup>
+					<h:panelGroup id="numberField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:number" />
+							<ui:param name="tooltip" value="Number" />
+							<ui:define name="label">
+								<h:outputText value="Number" />
+							</ui:define>
+							<p:inputText id="number"
+								value="#{managePatientsController.selectedEntity.address.number}" size="50"
+								required="false" disabled="#{managePatientsController.readOnly}">
+								<p:ajax event="blur" update="numberField" />
+							</p:inputText>
+						</ui:decorate>
+					</h:panelGroup>
+					<h:panelGroup id="districtField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:district" />
+							<ui:param name="tooltip" value="Dstrict" />
+							<ui:define name="label">
+								<h:outputText value="District" />
+							</ui:define>
+							<p:inputText id="district"
+								value="#{managePatientsController.selectedEntity.address.district}" size="50"
+								required="false" disabled="#{managePatientsController.readOnly}">
+								<p:ajax event="blur" update="districtField" />
+							</p:inputText>
+						</ui:decorate>
+					</h:panelGroup>
+					<h:panelGroup id="cityField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:city" />
+							<ui:param name="tooltip" value="City" />
+							<ui:define name="label">
+								<h:outputText value="City" />
+							</ui:define>
+							<p:inputText id="city"
+								value="#{managePatientsController.selectedEntity.address.city}" size="50"
+								required="false" disabled="#{managePatientsController.readOnly}">
+								<p:ajax event="blur" update="cityField" />
+							</p:inputText>
+						</ui:decorate>
+					</h:panelGroup>
+					<h:panelGroup id="stateField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:state" />
+							<ui:param name="tooltip" value="State" />
+							<ui:define name="label">
+								<h:outputText value="State" />
+							</ui:define>
+							<p:inputText id="state"
+								value="#{managePatientsController.selectedEntity.address.state}" size="50"
+								required="false" disabled="#{managePatientsController.readOnly}">
+								<p:ajax event="blur" update="stateField" />
+							</p:inputText>
+						</ui:decorate>
+					</h:panelGroup>
+					<h:panelGroup id="zipCodeField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:zipCode" />
+							<ui:param name="tooltip" value="Zip Code" />
+							<ui:define name="label">
+								<h:outputText value="Zip Code" />
+							</ui:define>
+							<p:inputText id="zipCode"
+								value="#{managePatientsController.selectedEntity.address.zipCode}" size="50"
+								required="false" disabled="#{managePatientsController.readOnly}">
+								<p:ajax event="blur" update="zipCodeField" />
+							</p:inputText>
+						</ui:decorate>
+					</h:panelGroup>
+
+					<ui:decorate
+						template="/resources/templates/default/formbutton.xhtml">
+						<h:panelGroup rendered="#{! managePatientsController.readOnly}">
+							<p:commandButton action="#{managePatientsController.list}"
+								value="#{msgs['crud.button.cancel']}" immediate="true"
+								icon="buttonCancel" />
+							<p:commandButton action="#{managePatientsController.save}"
+								value="#{msgs['crud.button.save']}" icon="buttonOk"
+								update=":form :globalMessages" />
+							<p:hotkey bind="#{msgs['crud.hotkey.backToList']}"
+								action="#{managePatientsController.list}" immediate="true" />
+							<p:hotkey bind="#{msgs['crud.hotkey.save']}"
+								action="#{managePatientsController.save}"
+								update=":form :globalMessages" />
+						</h:panelGroup>
+						<h:panelGroup rendered="#{managePatientsController.readOnly}">
+							<p:commandButton action="#{managePatientsController.list}"
+								value="#{msgs['crud.button.back']}" immediate="true"
+								icon="buttonBack" />
+							<p:hotkey bind="#{msgs['crud.hotkey.backToList']}"
+								action="#{managePatientsController.list}" immediate="true" />
+						</h:panelGroup>
+					</ui:decorate>
+				</h:form>
+			</ui:decorate>
+		</div>
+	</ui:define>
+
+	<ui:define name="help">
+		<h4>
+			<h:outputText value="#{msgs['text.hotkeys']}" />
+			:
+		</h4>
+		<ul>
+			<li><b><h:outputText
+						value="#{msgs['crud.hotkey.focusFirstField']}" /></b>: <h:outputText
+					value="#{msgs['crud.help.hotkeys.focusFirstField']}" />;</li>
+			<li><b><h:outputText
+						value="#{msgs['crud.hotkey.backToList']}" /></b>: <h:outputText
+					value="#{msgs['crud.help.hotkeys.backToList']}" />;</li>
+			<li><b><h:outputText value="#{msgs['crud.hotkey.save']}" /></b>:
+				<h:outputText value="#{msgs['crud.help.hotkeys.save']}" />.</li>
+		</ul>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,208 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/resources/templates/default/decorator.xhtml">
+
+	<ui:define name="title">
+		<h:outputText value="Manage Examinations" />
+	</ui:define>
+
+	<ui:define name="body">
+		<h1>
+			<h:outputText value="Manage Examinations" />
+		</h1>
+
+		<div class="crud">
+			<!-- Filter bar: used to filter the listing (displayed when there is at least one filter available). -->
+			<h:form id="filterForm">
+				<h:panelGroup id="filterBar"
+					rendered="#{(not empty manageExaminationsController.filters)}">
+					<div class="crudFilterBar">
+						<h:outputText value="Filtrar" />
+						<p:selectOneMenu id="filter" required="true"
+							value="#{manageExaminationsController.filterKey}">
+							<f:selectItems value="#{manageExaminationsController.filters}"
+								var="filter" itemLabel="#{filter.label}"
+								itemValue="#{filter.key}" />
+							<f:ajax event="change" execute="@form"
+								listener="#{manageExaminationsController.changeFilter}"
+								render="@form :listingForm :buttonsForm" />
+						</p:selectOneMenu>
+						<h:outputText value=": " />
+						<p:inputText id="filterText" size="20" required="false"
+							value="#{manageExaminationsController.filterParam}"
+							rendered="#{manageExaminationsController.filter.options == null}" />
+						<p:selectOneMenu id="filterSelect" required="false"
+							value="#{manageExaminationsController.filterParam}"
+							rendered="#{manageExaminationsController.filter.options != null}">
+							<f:selectItems
+								value="#{manageExaminationsController.filter.reversedOptionsLabels}" />
+						</p:selectOneMenu>
+						<p:commandLink action="#{manageExaminationsController.filter}"
+							process="@form" update=":listingForm :buttonsForm">
+							<h:graphicImage style="border: 0;"
+								value="/resources/templates/default/icons/button-find.png"
+								title="#{msgs['crud.button.filter']}" />
+						</p:commandLink>
+						<p:hotkey bind="#{msgs['crud.hotkey.filterFocus']}"
+							handler="if (findObjectById('filterForm:filterText') != null) findObjectById('filterForm:filterText').focus(); else findObjectById('filterForm:filterSelect').focus();" />
+					</div>
+				</h:panelGroup>
+			</h:form>
+
+			<!-- The listing form. -->
+			<h:form id="listingForm">
+				<!-- Filter information (displayed when the listing is being filtered. -->
+				<h:panelGroup id="filterInfo"
+					rendered="#{manageExaminationsController.filtering}">
+					<div class="crudFilterInfo">
+						<h:outputFormat value="#{msgs['crud.text.filterInfo']} ">
+							<f:param value="#{manageExaminationsController.filter.label}" />
+							<f:param value="#{manageExaminationsController.filterLabel}" />
+						</h:outputFormat>
+						<p:commandLink action="#{manageExaminationsController.cancelFilter}"
+							process="@form" update="@form :buttonsForm">
+							<h:graphicImage style="border: 0;"
+								value="/resources/templates/default/icons/button-close.png"
+								title="#{msgs['crud.button.cancelFilter']}" />
+						</p:commandLink>
+						<p:hotkey bind="#{msgs['crud.hotkey.clearFilter']}"
+							action="#{manageExaminationsController.cancelFilter}" process="@form"
+							update=":listingForm :buttonsForm" />
+					</div>
+				</h:panelGroup>
+
+				<!-- The list of entities. -->
+				<h:panelGroup id="listing" styleClass="listing">
+					<p:dataTable widgetVar="listingTable"
+						value="#{manageExaminationsController.lazyEntities}" var="entity"
+						rows="#{manageExaminationsController.maxDataTableRowsPerPage}"
+						rowsPerPageTemplate="#{manageExaminationsController.halfMaxDataTableRowsPerPage},#{manageExaminationsController.maxDataTableRowsPerPage},#{manageExaminationsController.doubleMaxDataTableRowsPerPage}"
+						lazy="true" paginator="true"
+						selection="#{manageExaminationsController.selectedEntity}"
+						selectionMode="single"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						paginatorPosition="bottom"
+						loadingMessage="#{msgs['text.ajax.loading']}"
+						emptyMessage="#{manageExaminationsController.filtering ? msgs['manageSemesters.text.noEntitiesFiltered'] : msgs['manageSemesters.text.noEntities']}">
+
+						<p:column headerText="Simptoms and Observations">
+							<h:outputText value="#{entity.simptomsAndObservations}" />
+						</p:column>
+						<p:column headerText="Medicine Prescription">
+							<h:outputText value="#{entity.medicePrescription}" />
+						</p:column>
+						<p:column headerText="Consult Date">
+							<h:outputFormat value="#{entity.date}">
+								<f:convertDateTime type="both"
+									pattern="#{msgs['format.date.java']}" />
+							</h:outputFormat>
+						</p:column>
+						<p:column headerText="Patient">
+							<h:outputText value="#{entity.patient.fullName}" />
+						</p:column>
+						<p:column headerText="Doctor">
+							<h:outputText value="#{entity.doctor.fullName}" />
+						</p:column>
+
+						<p:ajax event="rowSelect" update=":buttonsForm" />
+					</p:dataTable>
+					<p:hotkey bind="ctrl+left" handler="goToFirstPage(listingTable);" />
+					<p:hotkey bind="left" handler="goToPreviousPage(listingTable);" />
+					<p:hotkey bind="right" handler="goToNextPage(listingTable);" />
+					<p:hotkey bind="ctrl+right" handler="goToLastPage(listingTable);" />
+				</h:panelGroup>
+			</h:form>
+
+			<!-- Buttons shown below the listing. -->
+			<h:form id="buttonsForm">
+				<div class="crudButtons">
+					<p:commandButton action="#{manageExaminationsController.create}"
+						value="#{msgs['crud.button.create']}" icon="buttonNew" />
+					<p:commandButton action="#{manageExaminationsController.retrieve}"
+						value="#{msgs['crud.button.retrieve']}" icon="buttonView"
+						disabled="#{manageExaminationsController.selectedEntity == null}" />
+					<p:commandButton action="#{manageExaminationsController.update}"
+						value="#{msgs['crud.button.update']}" icon="buttonEdit"
+						disabled="#{manageExaminationsController.selectedEntity == null}" />
+					<p:commandButton action="#{manageExaminationsController.trash}"
+						value="#{msgs['crud.button.delete']}" icon="buttonTrash"
+						disabled="#{manageExaminationsController.selectedEntity == null}"
+						process="@this" update=":trashForm" />
+					<p:hotkey bind="#{msgs['crud.hotkey.create']}"
+						action="#{manageExaminationsController.create}" />
+					<p:hotkey bind="#{msgs['crud.hotkey.retrieve']}"
+						action="#{manageExaminationsController.retrieve}"
+						rendered="#{manageExaminationsController.selectedEntity != null}" />
+					<p:hotkey bind="#{msgs['crud.hotkey.update']}"
+						action="#{manageExaminationsController.update}"
+						rendered="#{manageExaminationsController.selectedEntity != null}" />
+					<p:hotkey bind="#{msgs['crud.hotkey.delete']}"
+						action="#{manageExaminationsController.trash}"
+						rendered="#{manageExaminationsController.selectedEntity != null}"
+						process="@this" update=":trashForm" />
+				</div>
+			</h:form>
+
+			<!-- The trash panel: shows entities that have been selected for deletion. -->
+			<h:form id="trashForm">
+				<p:panel id="trashPanel" styleClass="trashPanel"
+					header="#{msgs['crud.text.trashHeader']}" toggleable="true"
+					rendered="#{not empty manageExaminationsController.trashCan}">
+					<p:dataList value="#{manageExaminationsController.trashCan}"
+						var="entity" type="unordered">
+                        #{entity.firstName}
+                    </p:dataList>
+					<div class="nemoUtilsFormInternalButton">
+						<p:commandButton
+							action="#{manageExaminationsController.cancelDeletion}"
+							value="#{msgs['crud.button.cancelDeletion']}" icon="buttonCancel"
+							update=":trashForm :buttonsForm :listingForm" />
+						<p:commandButton action="#{manageExaminationsController.delete}"
+							value="#{msgs['crud.button.confirmDeletion']}" icon="buttonOk" />
+						<p:hotkey bind="#{msgs['crud.hotkey.cancelDeletion']}"
+							action="#{manageExaminationsController.cancelDeletion}"
+							update=":trashForm :buttonsForm :listingForm" />
+						<p:hotkey bind="#{msgs['crud.hotkey.confirmDeletion']}"
+							action="#{manageExaminationsController.delete}" />
+					</div>
+				</p:panel>
+			</h:form>
+		</div>
+
+		<p>&nbsp;</p>
+
+	</ui:define>
+
+	<ui:define name="help">
+		<h4>
+			<h:outputText value="#{msgs['text.hotkeys']}" />
+			:
+		</h4>
+		<ul>
+			<li><b><h:outputText
+						value="#{msgs['crud.hotkey.filterFocus']}" /></b>: <h:outputText
+					value="#{msgs['crud.help.hotkeys.filterFocus']}" />;</li>
+			<li><b><h:outputText
+						value="#{msgs['crud.hotkey.clearFilter']}" /></b>: <h:outputText
+					value="#{msgs['crud.help.hotkeys.clearFilter']}" />;</li>
+			<li><b><h:outputText value="#{msgs['crud.hotkey.create']}" /></b>:
+				<h:outputText value="#{msgs['crud.help.hotkeys.create']}" />;</li>
+			<li><b><h:outputText value="#{msgs['crud.hotkey.retrieve']}" /></b>:
+				<h:outputText value="#{msgs['crud.help.hotkeys.retrieve']}" />;</li>
+			<li><b><h:outputText value="#{msgs['crud.hotkey.update']}" /></b>:
+				<h:outputText value="#{msgs['crud.help.hotkeys.update']}" />;</li>
+			<li><b><h:outputText value="#{msgs['crud.hotkey.delete']}" /></b>:
+				<h:outputText value="#{msgs['crud.help.hotkeys.delete']}" />;</li>
+			<li><b><h:outputText
+						value="#{msgs['crud.hotkey.cancelDeletion']}" /></b>: <h:outputText
+					value="#{msgs['crud.help.hotkeys.cancelDeletion']}" />;</li>
+			<li><b><h:outputText
+						value="#{msgs['crud.hotkey.confirmDeletion']}" /></b>: <h:outputText
+					value="#{msgs['crud.help.hotkeys.confirmDeletion']}" />.</li>
+		</ul>
+	</ui:define>
+</ui:composition>

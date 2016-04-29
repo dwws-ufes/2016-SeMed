@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<!--
+Adapted from emerald (http://templated.co/emerald2) available at the Templated website (http://templated.co)
+Released under a Creative Commons Attribution 3.0 Unported (https://creativecommons.org/licenses/by/3.0/)
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html">
+	<h:head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/scripts/nemo-utils.js" />
+		<link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css' />
+		<title><h:outputText value="SeMed :: " /> <ui:insert name="title" /></title>
+		<ui:insert name="head" />
+	</h:head>
+
+	<h:body>
+		<h:outputStylesheet name="templates/default/stylesheets/style.css" />
+		<h:outputStylesheet name="templates/default/stylesheets/nemo-utils.css" />
+		
+		<!-- Ajax status indicator: -->
+		<div id="ajaxStatus">
+			<h:form id="statusForm">
+				<p:ajaxStatus>
+					<f:facet name="start">
+						<h:graphicImage alt="#{msgs['text.ajax.loading.alt']}" title="#{msgs['text.ajax.loading']}"
+							url="/resources/templates/default/icons/ajaxstatus-start.gif" />
+					</f:facet>
+					<f:facet name="error">
+						<h:graphicImage alt="#{msgs['text.ajax.error.alt']}" title="#{msgs['text.ajax.error']}"
+							url="/resources/templates/default/icons/ajaxstatus-error.png" />
+					</f:facet>
+					<f:facet name="complete">
+						<h:graphicImage alt="#{msgs['text.ajax.complete.alt']}" title="#{msgs['text.ajax.complete']}"
+							url="/resources/templates/default/icons/ajaxstatus-complete.png" />
+					</f:facet>
+				</p:ajaxStatus>
+			</h:form>
+		</div>
+		
+		<div id="wrapper">
+			<div id="header-wrapper" class="container">
+			<div id="header" class="container">
+				<div id="logo">
+					<h1><a href="#">SeMed</a></h1>
+				</div>
+				<div id="menu">
+					<ul>
+						<li><a href="/SeMed/managePatients/list.faces">Manage Patients</a></li>
+						<li><a href="/SeMed/manageDoctors/list.faces">Manage Doctors</a></li>
+						<li><a href="/SeMed/manageExaminations/list.faces">Manage Examinations</a></li>
+					</ul>
+				</div>
+			</div>
+			<div><img src="#{facesContext.externalContext.requestContextPath}/resources/templates/default/images/img03.png" width="1000" height="40" alt="" /></div>
+			</div>
+			<div id="page">
+				<div id="content">
+					<!-- Global messages: -->
+					<h:form id="globalMessages">
+						<p:growl id="messages" globalOnly="true" showSummary="true" showDetail="true" sticky="true" />
+					</h:form>
+					
+					<!-- Page contents: -->
+					<ui:insert name="body" />
+				</div>
+				<div class="container"><img src="#{facesContext.externalContext.requestContextPath}/resources/templates/default/images/img03.png" width="1000" height="10" alt="" /></div>
+			</div>
+			<div id="footer-content"></div>
+			<div id="footer">
+				<!-- Copyright notice: -->
+				<p>&copy; AutoTrab. All rights reserved. Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
+			</div>
+		</div>
+
+	</h:body>
+</f:view>
+</html>

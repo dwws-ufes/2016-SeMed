@@ -1,0 +1,97 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/templates/default/decorator.xhtml">
+
+    <ui:define name="title">
+        <h:outputText value="#{msgs['manageSemesters.title.create']}" rendered="#{(! manageSemestersController.readOnly) and (manageSemestersController.selectedEntity.id == null)}" />
+        <h:outputText value="#{msgs['manageSemesters.title.update']}" rendered="#{(! manageSemestersController.readOnly) and (manageSemestersController.selectedEntity.id != null)}" />
+        <h:outputText value="#{msgs['manageSemesters.title.retrieve']}" rendered="#{manageSemestersController.readOnly}" />
+    </ui:define>
+
+    <ui:define name="body">
+        <h1>
+            <h:outputText value="#{msgs['manageSemesters.title.create']}" rendered="#{(! manageSemestersController.readOnly) and (manageSemestersController.selectedEntity.id == null)}" />
+            <h:outputText value="#{msgs['manageSemesters.title.update']}" rendered="#{(! manageSemestersController.readOnly) and (manageSemestersController.selectedEntity.id != null)}" />
+            <h:outputText value="#{msgs['manageSemesters.title.retrieve']}" rendered="#{manageSemestersController.readOnly}" />
+        </h1>
+
+        <div class="crud">
+            <ui:decorate template="/resources/templates/default/form.xhtml">
+                <h:form id="form">
+                    <p:hotkey bind="#{msgs['crud.hotkey.focusFirstField']}" handler="findObjectById('form:year').focus();" />
+
+                    <h:panelGroup id="yearField">
+                        <ui:decorate template="/resources/templates/default/formfield.xhtml">
+                            <ui:param name="fieldName" value="form:year" />
+                            <ui:param name="tooltip" value="#{msgs['manageSemesters.form.year.tooltip']}" />
+                            <ui:define name="label"><h:outputText value="#{msgs['manageSemesters.form.year']}" /></ui:define>
+                            <p:inputText id="year" value="#{manageSemestersController.selectedEntity.year}" size="50" required="true" disabled="#{manageSemestersController.readOnly}">
+                                <p:ajax event="blur" update="yearField" />
+                            </p:inputText>
+                        </ui:decorate>
+                    </h:panelGroup>
+                    <h:panelGroup id="numberField">
+                        <ui:decorate template="/resources/templates/default/formfield.xhtml">
+                            <ui:param name="fieldName" value="form:number" />
+                            <ui:param name="tooltip" value="#{msgs['manageSemesters.form.number.tooltip']}" />
+                            <ui:define name="label"><h:outputText value="#{msgs['manageSemesters.form.number']}" /></ui:define>
+                            <p:inputText id="number" value="#{manageSemestersController.selectedEntity.number}" size="50" required="true" disabled="#{manageSemestersController.readOnly}">
+                                <p:ajax event="blur" update="numberField" />
+                            </p:inputText>
+                        </ui:decorate>
+                    </h:panelGroup>
+                    <h:panelGroup id="startDateField">
+                        <ui:decorate template="/resources/templates/default/formfield.xhtml">
+                            <ui:param name="fieldName" value="form:startDate" />
+                            <ui:param name="tooltip" value="#{msgs['manageSemesters.form.startDate.tooltip']}" />
+                            <ui:define name="label"><h:outputText value="#{msgs['manageSemesters.form.startDate']}" /></ui:define>
+                            <p:inputMask id="startDate" mask="#{msgs['format.date.primefaces']}" value="#{manageSemestersController.selectedEntity.startDate}" size="50" required="true" disabled="#{manageSemestersController.readOnly}">
+                                <p:ajax event="blur" update="startDateField" />
+                                <f:convertDateTime type="date" pattern="#{msgs['format.date.java']}" />
+                                <h:outputText value=" (#{msgs['format.date.label']})" />
+                            </p:inputMask>
+                        </ui:decorate>
+                    </h:panelGroup>
+                    <h:panelGroup id="endDateField">
+                        <ui:decorate template="/resources/templates/default/formfield.xhtml">
+                            <ui:param name="fieldName" value="form:endDate" />
+                            <ui:param name="tooltip" value="#{msgs['manageSemesters.form.endDate.tooltip']}" />
+                            <ui:define name="label"><h:outputText value="#{msgs['manageSemesters.form.endDate']}" /></ui:define>
+                            <p:inputMask id="endDate" mask="#{msgs['format.date.primefaces']}" value="#{manageSemestersController.selectedEntity.endDate}" size="50" required="true" disabled="#{manageSemestersController.readOnly}">
+                                <p:ajax event="blur" update="endDate" />
+                                <f:convertDateTime type="date" pattern="#{msgs['format.date.java']}" />
+                                <h:outputText value=" (#{msgs['format.date.label']})" />
+                            </p:inputMask>
+                        </ui:decorate>
+                    </h:panelGroup>
+
+                    <ui:decorate template="/resources/templates/default/formbutton.xhtml">
+                        <h:panelGroup rendered="#{! manageSemestersController.readOnly}">
+                            <p:commandButton action="#{manageSemestersController.list}" value="#{msgs['crud.button.cancel']}" immediate="true" icon="buttonCancel" />
+                            <p:commandButton action="#{manageSemestersController.save}" value="#{msgs['crud.button.save']}" icon="buttonOk" update=":form :globalMessages" />
+                            <p:hotkey bind="#{msgs['crud.hotkey.backToList']}" action="#{manageSemestersController.list}" immediate="true" />
+                            <p:hotkey bind="#{msgs['crud.hotkey.save']}" action="#{manageSemestersController.save}" update=":form :globalMessages" />
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{manageSemestersController.readOnly}">
+                            <p:commandButton action="#{manageSemestersController.list}" value="#{msgs['crud.button.back']}" immediate="true" icon="buttonBack" />
+                            <p:hotkey bind="#{msgs['crud.hotkey.backToList']}" action="#{manageSemestersController.list}" immediate="true" />
+                        </h:panelGroup>
+                    </ui:decorate>
+                </h:form>
+            </ui:decorate>
+        </div>
+    </ui:define>
+
+    <ui:define name="help">
+        <h4><h:outputText value="#{msgs['text.hotkeys']}" />:</h4>
+        <ul>
+            <li><b><h:outputText value="#{msgs['crud.hotkey.focusFirstField']}" /></b>: <h:outputText value="#{msgs['crud.help.hotkeys.focusFirstField']}" />;</li>
+            <li><b><h:outputText value="#{msgs['crud.hotkey.backToList']}" /></b>: <h:outputText value="#{msgs['crud.help.hotkeys.backToList']}" />;</li>
+            <li><b><h:outputText value="#{msgs['crud.hotkey.save']}" /></b>: <h:outputText value="#{msgs['crud.help.hotkeys.save']}" />.</li>
+        </ul>
+    </ui:define>
+</ui:composition>
