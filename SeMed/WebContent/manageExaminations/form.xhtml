@@ -1,0 +1,212 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/resources/templates/default/decorator.xhtml">
+
+	<ui:define name="title">
+		<h:outputText value="#{msgs['manageSemesters.title.create']}"
+			rendered="#{(! manageExaminationsController.readOnly) and (manageExaminationsController.selectedEntity.id == null)}" />
+		<h:outputText value="#{msgs['manageSemesters.title.update']}"
+			rendered="#{(! manageExaminationsController.readOnly) and (manageExaminationsController.selectedEntity.id != null)}" />
+		<h:outputText value="#{msgs['manageSemesters.title.retrieve']}"
+			rendered="#{manageExaminationsController.readOnly}" />
+	</ui:define>
+
+	<ui:define name="body">
+		<h1>
+			<h:outputText value="#{msgs['manageSemesters.title.create']}"
+				rendered="#{(! manageExaminationsController.readOnly) and (manageExaminationsController.selectedEntity.id == null)}" />
+			<h:outputText value="#{msgs['manageSemesters.title.update']}"
+				rendered="#{(! manageExaminationsController.readOnly) and (manageExaminationsController.selectedEntity.id != null)}" />
+			<h:outputText value="#{msgs['manageSemesters.title.retrieve']}"
+				rendered="#{manageExaminationsController.readOnly}" />
+		</h1>
+
+		<div class="crud">
+			<ui:decorate template="/resources/templates/default/form.xhtml">
+				<h:form id="form">
+					<p:hotkey bind="#{msgs['crud.hotkey.focusFirstField']}"
+						handler="findObjectById('form:firstName').focus();" />
+
+					<h:panelGroup id="simptomsAndObservationsField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:simptomsAndObservations" />
+							<ui:param name="tooltip" value="Simptoms and Observations" />
+							<ui:define name="label">
+								<h:outputText value="Simptoms and Observations" />
+							</ui:define>
+							<p:inputTextarea id="simptomsAndObservations"
+								value="#{manageExaminationsController.selectedEntity.simptomsAndObservations}"
+								size="50" required="true"
+								disabled="#{manageExaminationsController.readOnly}">
+								<p:ajax event="blur" update="simptomsAndObservationsField" />
+							</p:inputTextarea>
+						</ui:decorate>
+					</h:panelGroup>
+					<h:panelGroup id="medicePrescriptionField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:medicePrescription" />
+							<ui:param name="tooltip" value="Medice Prescription" />
+							<ui:define name="label">
+								<h:outputText value="medicePrescription" />
+							</ui:define>
+							<p:inputTextarea id="medicePrescription"
+								value="#{manageExaminationsController.selectedEntity.medicePrescription}"
+								size="50" required="true"
+								disabled="#{manageExaminationsController.readOnly}">
+								<p:ajax event="blur" update="medicePrescriptionField" />
+							</p:inputTextarea>
+						</ui:decorate>
+					</h:panelGroup>
+					<h:panelGroup id="dateField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:date" />
+							<ui:param name="tooltip" value="Consult Date" />
+							<ui:define name="label">
+								<h:outputText value="Consult Date" />
+							</ui:define>
+							<p:inputMask id="date"
+								mask="#{msgs['format.date.primefaces']}"
+								value="#{manageExaminationsController.selectedEntity.date}"
+								size="50" required="true"
+								disabled="#{manageExaminationsController.readOnly}">
+								<p:ajax event="blur" update="dateField" />
+								<f:convertDateTime type="date"
+									pattern="#{msgs['format.date.java']}" />
+								<h:outputText value=" (#{msgs['format.date.label']})" />
+							</p:inputMask>
+						</ui:decorate>
+					</h:panelGroup>
+
+					<h:panelGroup id="listingDoctor" styleClass="listing">
+						<p:dataTable id="listingDoctorA"
+							widgetVar="listingTable"
+							value="#{manageDoctorsController.lazyEntities}" var="dEntity"
+							rows="#{manageDoctorsController.maxDataTableRowsPerPage}"
+							rowsPerPageTemplate="#{manageDoctorsController.halfMaxDataTableRowsPerPage},#{manageDoctorsController.maxDataTableRowsPerPage},#{manageDoctorsController.doubleMaxDataTableRowsPerPage}"
+							style="width:850px;" lazy="true" paginator="true"
+							selection="#{manageExaminationsController.selectedDoctor}"
+							selectionMode="single"
+							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+							paginatorPosition="bottom"
+							loadingMessage="#{msgs['text.ajax.loading']}">
+<!-- 							emptyMessage="#{manageDoctorsController.filtering ? msgs['manageSemesters.text.noEntitiesFiltered'] : msgs['manageSemesters.text.noEntities']}"> -->
+							
+							
+							<p:column headerText="First Name">
+								<h:outputText value="#{dEntity.firstName}" />
+							</p:column>
+							<p:column headerText="Surname">
+								<h:outputText value="#{dEntity.surname}" />
+							</p:column>
+							<p:column headerText="Birth Date" style="width:75px;">
+								<h:outputFormat value="#{dEntity.birthDate}">
+									<f:convertDateTime type="both"
+										pattern="#{msgs['format.date.java']}" />
+								</h:outputFormat>
+							</p:column>
+							<p:column headerText="City">
+								<h:outputText value="#{dEntity.address.city}" />
+							</p:column>
+							<p:column headerText="State">
+								<h:outputText value="#{dEntity.address.state}" />
+							</p:column>
+
+							<!-- 							<p:ajax event="rowSelect" update="#{manageExaminationsController.selectedEntity.patient = manageDoctorsController.selectedEntity}" /> -->
+						</p:dataTable>
+
+					<h:panelGroup id="listingPatient" styleClass="listing">
+						<p:dataTable id="listingPatientA"
+							widgetVar="listingTable"
+							value="#{managePatientsController.lazyEntities}" var="pEntity"
+							rows="#{managePatientsController.maxDataTableRowsPerPage}"
+							rowsPerPageTemplate="#{managePatientsController.halfMaxDataTableRowsPerPage},#{managePatientsController.maxDataTableRowsPerPage},#{managePatientsController.doubleMaxDataTableRowsPerPage}"
+							style="width:850px;" lazy="true" paginator="true"
+							selection="#{manageExaminationsController.selectedPatient}"
+							selectionMode="single"
+							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+							paginatorPosition="bottom"
+							loadingMessage="#{msgs['text.ajax.loading']}">
+<!-- 							emptyMessage="#{managePatientsController.filtering ? msgs['manageSemesters.text.noEntitiesFiltered'] : msgs['manageSemesters.text.noEntities']}"> -->
+
+							<p:column headerText="First Name">
+								<h:outputText value="#{pEntity.firstName}" />
+							</p:column>
+							<p:column headerText="Surname">
+								<h:outputText value="#{pEntity.surname}" />
+							</p:column>
+							<p:column headerText="Birth Date" style="width:75px;">
+								<h:outputFormat value="#{pEntity.birthDate}">
+									<f:convertDateTime type="both"
+										pattern="#{msgs['format.date.java']}" />
+								</h:outputFormat>
+							</p:column>
+							<p:column headerText="City">
+								<h:outputText value="#{pEntity.address.city}" />
+							</p:column>
+							<p:column headerText="State">
+								<h:outputText value="#{pEntity.address.state}" />
+							</p:column>
+
+							<!-- 							<p:ajax event="rowSelect" update="#{manageExaminationsController.selectedEntity.patient = managePatientsController.selectedEntity}" /> -->
+						</p:dataTable>
+					</h:panelGroup>
+
+
+						<p:hotkey bind="ctrl+left" handler="goToFirstPage(listingTable);" />
+						<p:hotkey bind="left" handler="goToPreviousPage(listingTable);" />
+						<p:hotkey bind="right" handler="goToNextPage(listingTable);" />
+						<p:hotkey bind="ctrl+right" handler="goToLastPage(listingTable);" />
+					</h:panelGroup>
+
+					<ui:decorate
+						template="/resources/templates/default/formbutton.xhtml">
+						<h:panelGroup rendered="#{! manageExaminationsController.readOnly}">
+							<p:commandButton action="#{manageExaminationsController.list}"
+								value="#{msgs['crud.button.cancel']}" immediate="true"
+								icon="buttonCancel" />
+							<p:commandButton action="#{manageExaminationsController.save}"
+								value="#{msgs['crud.button.save']}" icon="buttonOk"
+								update=":form :globalMessages" />
+							<p:hotkey bind="#{msgs['crud.hotkey.backToList']}"
+								action="#{manageExaminationsController.list}" immediate="true" />
+							<p:hotkey bind="#{msgs['crud.hotkey.save']}"
+								action="#{manageExaminationsController.save}"
+								update=":form :globalMessages" />
+						</h:panelGroup>
+						<h:panelGroup rendered="#{manageExaminationsController.readOnly}">
+							<p:commandButton action="#{manageExaminationsController.list}"
+								value="#{msgs['crud.button.back']}" immediate="true"
+								icon="buttonBack" />
+							<p:hotkey bind="#{msgs['crud.hotkey.backToList']}"
+								action="#{manageExaminationsController.list}" immediate="true" />
+						</h:panelGroup>
+					</ui:decorate>
+				</h:form>
+			</ui:decorate>
+		</div>
+	</ui:define>
+
+	<ui:define name="help">
+		<h4>
+			<h:outputText value="#{msgs['text.hotkeys']}" />
+			:
+		</h4>
+		<ul>
+			<li><b><h:outputText
+						value="#{msgs['crud.hotkey.focusFirstField']}" /></b>: <h:outputText
+					value="#{msgs['crud.help.hotkeys.focusFirstField']}" />;</li>
+			<li><b><h:outputText
+						value="#{msgs['crud.hotkey.backToList']}" /></b>: <h:outputText
+					value="#{msgs['crud.help.hotkeys.backToList']}" />;</li>
+			<li><b><h:outputText value="#{msgs['crud.hotkey.save']}" /></b>:
+				<h:outputText value="#{msgs['crud.help.hotkeys.save']}" />.</li>
+		</ul>
+	</ui:define>
+</ui:composition>

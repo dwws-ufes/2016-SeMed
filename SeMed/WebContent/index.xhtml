@@ -1,24 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-				xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-                template="/resources/default/decorator.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/resources/templates/default/decorator.xhtml">
 
-	<ui:define name="head"></ui:define>
-	
-    <ui:define name="title"><h:outputText value="SeMed" /></ui:define>
-    
-    <ui:define name="description"><h:outputText value="Semantic Medical System" /></ui:define>
+	<ui:define name="title">
+		<h:outputText value="#{msgs['title.home']}" />
+	</ui:define>
 
-    <ui:define name="body">
-    	<div align="center" style="margin-top: 20px;">
-    		<h:outputLink value="http://gooie-duck.deviantart.com/art/Marvin-the-Paranoid-Android-192324294">
-    			<h:graphicImage library="default" name="images/marvin.jpg" style="border: 1px solid black;" />
-    		</h:outputLink>
-    	</div>
-    </ui:define>
+	<ui:define name="body">
+		<h1>
+			<h:outputText value="#{msgs['title.home']}" />
+		</h1>
+
+		<p>Work in progress...</p>
+<!-- 		<p> -->
+<!-- 			Try the -->
+<!-- 			<h:link outcome="manageSemesters/list.xhtml" value="Manage Semesters" /> -->
+<!-- 			feature. -->
+<!-- 		</p> -->
+		<p>
+			Try the
+			<h:link outcome="managePatients/list.xhtml" value="Manage Patients" />
+			feature.
+		</p>
+		<p>
+			Try the
+			<h:link outcome="manageDoctors/list.xhtml" value="Manage Doctors" />
+			feature.
+		</p>
+		<p>
+			Try the
+			<h:link outcome="manageExaminations/list.xhtml" value="Manage Examinations" />
+			feature.
+		</p>
+
+	</ui:define>
 </ui:composition>

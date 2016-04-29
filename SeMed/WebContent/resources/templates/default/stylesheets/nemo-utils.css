@@ -1,0 +1,204 @@
+/*** BUTTONS ***/
+
+.buttonAdd 		{ background-image: url(../../../../resources/templates/default/icons/button-add.png) !important; }
+.buttonBack 	{ background-image: url(../../../../resources/templates/default/icons/button-back.png) !important; }
+.buttonCancel 	{ background-image: url(../../../../resources/templates/default/icons/button-cancel.png) !important; }
+.buttonEdit 	{ background-image: url(../../../../resources/templates/default/icons/button-edit.png) !important; }
+.buttonNew 		{ background-image: url(../../../../resources/templates/default/icons/button-new.png) !important; }
+.buttonOk 		{ background-image: url(../../../../resources/templates/default/icons/button-ok.png) !important; }
+.buttonRemove 	{ background-image: url(../../../../resources/templates/default/icons/button-remove.png) !important; }
+.buttonTrash 	{ background-image: url(../../../../resources/templates/default/icons/button-trash.png) !important; }
+.buttonView 	{ background-image: url(../../../../resources/templates/default/icons/button-view.png) !important; }
+
+
+/*** PRIMEFACES WIDGETS ***/
+
+/* Placing the AJAX indicator in the right corner of the screen. */
+#ajaxStatus {
+	float: right;
+	margin: 57px 10px 0 0;
+}
+
+/* Reducing the size of the font in PrimeFaces widgets: */
+.ui-widget, .ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
+	font-size: 10pt;
+}
+
+/* Reducing even further the size of the font in autocomplete lists. */
+.ui-autocomplete-list {
+	font-size: 8pt;
+}
+
+/* Reducing the size of the font in message boxes and removing its borders and background color. */
+.ui-messages .ui-message-info, .ui-message-error, .ui-message-warn, .ui-message-fatal { 
+	font-size: 8pt;
+	background-color: transparent;
+	border: none;
+}
+
+/* Making disabled fields look like normal fields. */
+.ui-inputfield.ui-state-disabled {
+	opacity: 1;
+}
+
+/* Spacing next to menu icons in the main menu. */
+.ui-menuitem-icon {
+	margin-right: 5px;
+}
+
+/* Tables obey their specified sizes and word wrap text in columns. */
+.ui-datatable table {
+	table-layout: fixed;
+}
+.ui-datatable tbody td {
+   white-space:normal !important;
+}
+
+/* For tables without header. */
+.no-header table thead tr {
+    display: none;
+}
+
+
+/*** HELP PANEL. ***/
+#helpPanel {
+	margin-top: 20px;
+}
+
+#helpPanel .ui-panel-content {
+	font-size: 8pt;
+}
+
+#helpPanel h4 {
+	font-weight: bold;
+}
+
+#helpPanel ul {
+	margin-left: -10px;
+}
+
+
+
+/*** FORMS ***/
+
+div.nemoUtilsForm {
+	margin: 10px 0 10px 0;
+	width: 100%;
+}
+
+div.nemoUtilsForm div.nemoUtilsFormField {
+	width: 100%;
+	padding: 0;
+	background-color: #E6E6FA;
+	border-bottom: 5px solid white;
+}
+
+div.nemoUtilsForm div.nemoUtilsFormField div.label {
+	float: left;
+	width: 24%;
+	text-align: right;
+	padding: 5px 2px 5px 2px;
+}
+
+div.nemoUtilsForm div.nemoUtilsFormField div.field {
+	float: right;
+	width: 72%;
+	border-left: 5px solid white;
+	padding: 5px 7px 5px 7px;
+}
+
+div.nemoUtilsForm div.nemoUtilsFormField div.clear {
+	clear: both;
+}
+
+div.nemoUtilsForm div.nemoUtilsFormField div.field ul {
+	list-style-image: url(../../../../resources/templates/default/icons/error-icon.png);
+	display: block;
+	margin: 0 0 3px 0;
+	padding: 0;
+	width: 67%;
+}
+
+div.nemoUtilsForm div.nemoUtilsFormField div.field ul li {
+	margin-left: 23px;
+}
+
+div.nemoUtilsForm div.nemoUtilsFormFieldError {
+	background-color: #FFA07A;
+}
+
+div.nemoUtilsForm div.nemoUtilsFormFieldError div.label {
+	font-weight: bold;
+}
+
+div.nemoUtilsForm div.nemoUtilsFormFieldError div.field {
+	font-weight: bold;
+}
+
+div.nemoUtilsForm div.nemoUtilsFormButton {
+	width: 100%;
+	clear: both;
+	padding: 5px 0 5px 0;
+	text-align: right;
+}
+
+div.nemoUtilsFormInternalButton {
+	width: 100%;
+	text-align: right;
+}
+
+
+
+/*** CRUD LISTING ***/
+
+/* Listing page - Filter bar. */
+div.crud div.crudFilterBar {
+	margin: 0 20px 0 auto;
+	float: right;
+}
+
+div.crud div.crudFilterBar img {
+	margin-left: 5px;
+}
+
+/* Fixing alignment on filter list box. */
+div.crud div.crudFilterBar .ui-helper-clearfix { margin-bottom: -7px; }
+div.crud div.crudFilterBar .ui-inputtext { margin-bottom: 5px; }
+
+/* Listing page - Filter info. */
+div.crud div.crudFilterInfo {
+	font-size: 8pt;
+	margin: 0 20px 0 auto;
+}
+
+/* Listing page - Listing table. */
+div.crud div.ui-datatable {
+	margin: 10px auto 15px auto;
+	width: 95%;
+}
+div.crud div.nemoUtilsFormField div.ui-datatable {
+	margin: 0 auto 0 auto;
+	width: 100%;
+}
+div.crud div.ui-datatable tbody.ui-datatable-data-empty div {
+	padding: 10px;
+	text-align: center;
+}
+
+/* Listing page - Buttons panel below the navigation panel. */
+div.crud div.crudButtons {
+	margin: 15px auto 15px auto;
+	text-align: right;
+	width: 95%;
+}
+div.crud div.crudButtons button {
+	margin-left: 5px;
+}
+
+div.crud div.trashPanel ul {
+	border: none;
+	list-style-image: url(../icons/bullet-red.png);
+	display: block;
+	margin: 0 0 3px 15px;
+	padding: 0;
+}

@@ -13,9 +13,13 @@
 				<checksumPolicy>fail</checksumPolicy>
 			</releases>
 			<id>br.ufes.inf.nemo</id>
-			<name>Nemo/Ufes Maven2 Repository</name>
+			<name>Nemo/Ufes maven2 Repository</name>
 			<url>http://dev.nemo.inf.ufes.br/maven2/</url>
 			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>JBoss Repository</id>
+			<url>https://repository.jboss.org/nexus/content/groups/public/</url>
 		</repository>
 	</repositories>
 	<build>
@@ -44,11 +48,6 @@
 			<groupId>br.ufes.inf.nemo</groupId>
 			<artifactId>nemo-utils-jee-wp</artifactId>
 			<version>1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.primefaces</groupId>
-			<artifactId>primefaces</artifactId>
-			<version>5.3</version>
 		</dependency>
 	</dependencies>
 </project>
