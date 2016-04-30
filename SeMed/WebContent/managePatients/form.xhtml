@@ -25,6 +25,8 @@
 				rendered="#{managePatientsController.readOnly}" />
 		</h1>
 
+		<h:messages/>
+		
 		<div class="crud">
 			<ui:decorate template="/resources/templates/default/form.xhtml">
 				<h:form id="form">
@@ -71,11 +73,21 @@
 							<ui:define name="label">
 								<h:outputText value="CPF" />
 							</ui:define>
-							<p:inputText id="cpf"
+							<!-- <p:inputText id="cpf"
 								value="#{managePatientsController.selectedEntity.cpf}" size="50"
 								required="false" disabled="#{managePatientsController.readOnly}">
 								<p:ajax event="blur" update="cpfField" />
-							</p:inputText>
+							</p:inputText> -->
+							
+							<p:inputMask id="cpf"
+								mask="999.999.999-99"
+								value="#{managePatientsController.selectedEntity.cpf}"
+								size="14" required="false"
+								disabled="#{managePatientsController.readOnly}" validator="validator.CpfValidator">
+								<p:ajax event="blur" update="cpfField" />
+								
+							</p:inputMask>
+							
 						</ui:decorate>
 					</h:panelGroup>
 					<h:panelGroup id="birthDateField">
@@ -89,8 +101,8 @@
 							<p:inputMask id="birthDate"
 								mask="#{msgs['format.date.primefaces']}"
 								value="#{managePatientsController.selectedEntity.birthDate}"
-								size="50" required="true"
-								disabled="#{managePatientsController.readOnly}">
+								size="10" required="true"
+								disabled="#{managePatientsController.readOnly}"  >
 								<p:ajax event="blur" update="birthDateField" />
 								<f:convertDateTime type="date"
 									pattern="#{msgs['format.date.java']}" />
@@ -181,11 +193,21 @@
 							<ui:define name="label">
 								<h:outputText value="Zip Code" />
 							</ui:define>
-							<p:inputText id="zipCode"
+							<!-- <p:inputText id="zipCode"
 								value="#{managePatientsController.selectedEntity.address.zipCode}" size="50"
 								required="false" disabled="#{managePatientsController.readOnly}">
 								<p:ajax event="blur" update="zipCodeField" />
-							</p:inputText>
+							</p:inputText> -->
+							
+							<p:inputMask id="zipCode"
+								mask="99999-999"
+								value="#{managePatientsController.selectedEntity.address.zipCode}"
+								size="9" required="false"
+								disabled="#{managePatientsController.readOnly}">
+								<p:ajax event="blur" update="zipCodeField" />
+								
+							</p:inputMask>
+							
 						</ui:decorate>
 					</h:panelGroup>
 

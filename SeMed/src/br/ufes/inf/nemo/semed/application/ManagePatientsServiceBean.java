@@ -2,6 +2,10 @@ package br.ufes.inf.nemo.semed.application;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
 
 import br.ufes.inf.nemo.semed.domain.Address;
 import br.ufes.inf.nemo.semed.domain.Patient;
@@ -14,8 +18,9 @@ public class ManagePatientsServiceBean extends CrudServiceBean<Patient> implemen
 
 	private static final long serialVersionUID = 1L;
 
-	@EJB private PatientDAO patientDAO;
-	
+	@EJB
+	private PatientDAO patientDAO;
+
 	@Override
 	public BaseDAO<Patient> getDAO() {
 		return patientDAO;

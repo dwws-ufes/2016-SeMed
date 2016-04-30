@@ -8,6 +8,7 @@ import br.ufes.inf.nemo.semed.application.ManageDoctorsService;
 import br.ufes.inf.nemo.semed.domain.Address;
 import br.ufes.inf.nemo.semed.domain.Doctor;
 import br.ufes.inf.nemo.util.ejb3.application.CrudService;
+import br.ufes.inf.nemo.util.ejb3.application.filters.SimpleFilter;
 import br.ufes.inf.nemo.util.ejb3.controller.CrudController;
 
 @Named @SessionScoped
@@ -36,7 +37,12 @@ public class ManageDoctorsController extends CrudController<Doctor> {
 
 	@Override
 	protected void initFilters() {
-		// TODO Auto-generated method stub
+		addFilter(new SimpleFilter("manageDoctors.filter.byFirstName", "firstName",
+				getI18nMessage("msgs", "manageDoctors.text.filter.byFirstName")));
+		addFilter(new SimpleFilter("manageDoctors.filter.byCity", "address.city",
+				getI18nMessage("msgs", "manageDoctors.text.filter.byCity")));
+		addFilter(new SimpleFilter("manageDoctors.filter.byProfessionalId", "professionalId",
+				getI18nMessage("msgs", "manageDoctors.text.filter.byProfessionalId")));
 
 	}
 

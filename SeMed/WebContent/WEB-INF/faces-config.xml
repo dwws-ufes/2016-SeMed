@@ -19,4 +19,8 @@
 			<default-locale>en-US</default-locale>
 		</locale-config>
 	</application>
+	<validator>
+		<validator-id>validator.CpfValidator</validator-id>
+		<validator-class>br.ufes.inf.nemo.semed.domain.validator.CpfValidator</validator-class>
+	</validator>
 </faces-config>

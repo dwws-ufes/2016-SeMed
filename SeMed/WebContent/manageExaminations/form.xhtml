@@ -74,7 +74,7 @@
 							<p:inputMask id="date"
 								mask="#{msgs['format.date.primefaces']}"
 								value="#{manageExaminationsController.selectedEntity.date}"
-								size="50" required="true"
+								size="10" required="true"
 								disabled="#{manageExaminationsController.readOnly}">
 								<p:ajax event="blur" update="dateField" />
 								<f:convertDateTime type="date"
@@ -85,8 +85,7 @@
 					</h:panelGroup>
 
 					<h:panelGroup id="listingDoctor" styleClass="listing">
-						<p:dataTable id="listingDoctorA"
-							widgetVar="listingTable"
+						<p:dataTable widgetVar="listingTable"
 							value="#{manageDoctorsController.lazyEntities}" var="dEntity"
 							rows="#{manageDoctorsController.maxDataTableRowsPerPage}"
 							rowsPerPageTemplate="#{manageDoctorsController.halfMaxDataTableRowsPerPage},#{manageDoctorsController.maxDataTableRowsPerPage},#{manageDoctorsController.doubleMaxDataTableRowsPerPage}"
@@ -122,8 +121,7 @@
 						</p:dataTable>
 
 					<h:panelGroup id="listingPatient" styleClass="listing">
-						<p:dataTable id="listingPatientA"
-							widgetVar="listingTable"
+						<p:dataTable widgetVar="listingTable"
 							value="#{managePatientsController.lazyEntities}" var="pEntity"
 							rows="#{managePatientsController.maxDataTableRowsPerPage}"
 							rowsPerPageTemplate="#{managePatientsController.halfMaxDataTableRowsPerPage},#{managePatientsController.maxDataTableRowsPerPage},#{managePatientsController.doubleMaxDataTableRowsPerPage}"

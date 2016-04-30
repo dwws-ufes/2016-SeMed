@@ -9,6 +9,7 @@ import br.ufes.inf.nemo.semed.domain.Doctor;
 import br.ufes.inf.nemo.semed.domain.Examination;
 import br.ufes.inf.nemo.semed.domain.Patient;
 import br.ufes.inf.nemo.util.ejb3.application.CrudService;
+import br.ufes.inf.nemo.util.ejb3.application.filters.SimpleFilter;
 import br.ufes.inf.nemo.util.ejb3.controller.CrudController;
 
 @Named @SessionScoped
@@ -70,7 +71,10 @@ public class ManageExaminationsController extends CrudController<Examination> {
 
 	@Override
 	protected void initFilters() {
-		// TODO Auto-generated method stub
+		addFilter(new SimpleFilter("manageExaminations.filter.byPatient", "patient.firstName",
+				getI18nMessage("msgs", "manageExaminations.text.filter.byPatient")));
+		addFilter(new SimpleFilter("manageExaminations.filter.byDoctor", "doctor.firstName",
+				getI18nMessage("msgs", "manageExaminations.text.filter.byDoctor")));
 		
 	}
 	

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	<persistence-unit name="AutoTrab">
+	<persistence-unit name="SeMed">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<jta-data-source>java:/jboss/datasources/AutoTrab</jta-data-source>
+		<jta-data-source>java:/jboss/datasources/SeMed</jta-data-source>
 		<class>br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport</class>
 		<class>br.ufes.inf.nemo.semed.domain.Semester</class>
 		<class>br.ufes.inf.nemo.semed.domain.Patient</class>
@@ -12,10 +12,6 @@
 		<properties>
 			<!-- Properties for Hibernate -->
 			<property name="hibernate.hbm2ddl.auto" value="update" />
-			<!-- 
-			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="true" />
-			 -->
 		</properties>
 	</persistence-unit>
 </persistence>

@@ -39,8 +39,10 @@ public class ManagePatientsController extends CrudController<Patient> {
 
 	@Override
 	protected void initFilters() {
-	//	addFilter(new SimpleFilter("managePatients.filter.byFirstName", "firstName",
-	//			getI18nMessage("msgs", "managePatients.text.filter.byFirstName")));
+		addFilter(new SimpleFilter("managePatients.filter.byFirstName", "firstName",
+				getI18nMessage("msgs", "managePatients.text.filter.byFirstName")));
+		addFilter(new SimpleFilter("managePatients.filter.byCity", "address.city",
+				getI18nMessage("msgs", "managePatients.text.filter.byCity")));
 	}
 
 }
