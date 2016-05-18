@@ -25,8 +25,8 @@
 				rendered="#{managePatientsController.readOnly}" />
 		</h1>
 
-		<h:messages/>
-		
+		<h:messages />
+
 		<div class="crud">
 			<ui:decorate template="/resources/templates/default/form.xhtml">
 				<h:form id="form">
@@ -78,16 +78,15 @@
 								required="false" disabled="#{managePatientsController.readOnly}">
 								<p:ajax event="blur" update="cpfField" />
 							</p:inputText> -->
-							
-							<p:inputMask id="cpf"
-								mask="999.999.999-99"
-								value="#{managePatientsController.selectedEntity.cpf}"
-								size="14" required="false"
-								disabled="#{managePatientsController.readOnly}" validator="validator.CpfValidator">
+
+							<p:inputMask id="cpf" mask="999.999.999-99"
+								value="#{managePatientsController.selectedEntity.cpf}" size="14"
+								required="false" disabled="#{managePatientsController.readOnly}"
+								validator="validator.CpfValidator">
 								<p:ajax event="blur" update="cpfField" />
-								
+
 							</p:inputMask>
-							
+
 						</ui:decorate>
 					</h:panelGroup>
 					<h:panelGroup id="birthDateField">
@@ -102,7 +101,7 @@
 								mask="#{msgs['format.date.primefaces']}"
 								value="#{managePatientsController.selectedEntity.birthDate}"
 								size="10" required="true"
-								disabled="#{managePatientsController.readOnly}"  >
+								disabled="#{managePatientsController.readOnly}">
 								<p:ajax event="blur" update="birthDateField" />
 								<f:convertDateTime type="date"
 									pattern="#{msgs['format.date.java']}" />
@@ -119,8 +118,9 @@
 								<h:outputText value="Street" />
 							</ui:define>
 							<p:inputText id="street"
-								value="#{managePatientsController.selectedEntity.address.street}" size="50"
-								required="false" disabled="#{managePatientsController.readOnly}">
+								value="#{managePatientsController.selectedEntity.address.street}"
+								size="50" required="false"
+								disabled="#{managePatientsController.readOnly}">
 								<p:ajax event="blur" update="streetField" />
 							</p:inputText>
 						</ui:decorate>
@@ -134,8 +134,9 @@
 								<h:outputText value="Number" />
 							</ui:define>
 							<p:inputText id="number"
-								value="#{managePatientsController.selectedEntity.address.number}" size="50"
-								required="false" disabled="#{managePatientsController.readOnly}">
+								value="#{managePatientsController.selectedEntity.address.number}"
+								size="50" required="false"
+								disabled="#{managePatientsController.readOnly}">
 								<p:ajax event="blur" update="numberField" />
 							</p:inputText>
 						</ui:decorate>
@@ -149,8 +150,9 @@
 								<h:outputText value="District" />
 							</ui:define>
 							<p:inputText id="district"
-								value="#{managePatientsController.selectedEntity.address.district}" size="50"
-								required="false" disabled="#{managePatientsController.readOnly}">
+								value="#{managePatientsController.selectedEntity.address.district}"
+								size="50" required="false"
+								disabled="#{managePatientsController.readOnly}">
 								<p:ajax event="blur" update="districtField" />
 							</p:inputText>
 						</ui:decorate>
@@ -164,8 +166,9 @@
 								<h:outputText value="City" />
 							</ui:define>
 							<p:inputText id="city"
-								value="#{managePatientsController.selectedEntity.address.city}" size="50"
-								required="false" disabled="#{managePatientsController.readOnly}">
+								value="#{managePatientsController.selectedEntity.address.city}"
+								size="50" required="false"
+								disabled="#{managePatientsController.readOnly}">
 								<p:ajax event="blur" update="cityField" />
 							</p:inputText>
 						</ui:decorate>
@@ -179,8 +182,9 @@
 								<h:outputText value="State" />
 							</ui:define>
 							<p:inputText id="state"
-								value="#{managePatientsController.selectedEntity.address.state}" size="50"
-								required="false" disabled="#{managePatientsController.readOnly}">
+								value="#{managePatientsController.selectedEntity.address.state}"
+								size="50" required="false"
+								disabled="#{managePatientsController.readOnly}">
 								<p:ajax event="blur" update="stateField" />
 							</p:inputText>
 						</ui:decorate>
@@ -198,16 +202,34 @@
 								required="false" disabled="#{managePatientsController.readOnly}">
 								<p:ajax event="blur" update="zipCodeField" />
 							</p:inputText> -->
-							
-							<p:inputMask id="zipCode"
-								mask="99999-999"
+
+							<p:inputMask id="zipCode" mask="99999-999"
 								value="#{managePatientsController.selectedEntity.address.zipCode}"
 								size="9" required="false"
 								disabled="#{managePatientsController.readOnly}">
 								<p:ajax event="blur" update="zipCodeField" />
-								
+
 							</p:inputMask>
-							
+
+						</ui:decorate>
+					</h:panelGroup>
+					<h:panelGroup id="descriptionField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:description" />
+							<ui:param name="tooltip" value="Description" />
+							<ui:define name="label">
+								<h:outputText value="Description" />
+							</ui:define>
+							<p:inputText id="description"
+								value="#{managePatientsController.selectedEntity.address.description}"
+								size="100" required="false"
+								disabled="#{managePatientsController.readOnly}">
+<!-- 								<p:ajax event="blur" update="descriptionField" /> -->
+								<f:ajax event="blur"
+									listener="#{managePatientsController.suggestDescription}"
+									execute="@this" render="description" />
+							</p:inputText>
 						</ui:decorate>
 					</h:panelGroup>
 
