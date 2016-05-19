@@ -225,7 +225,7 @@
 								value="#{managePatientsController.selectedEntity.address.description}"
 								size="100" required="false"
 								disabled="#{managePatientsController.readOnly}">
-<!-- 								<p:ajax event="blur" update="descriptionField" /> -->
+								<!-- 								<p:ajax event="blur" update="descriptionField" /> -->
 								<f:ajax event="blur"
 									listener="#{managePatientsController.suggestDescription}"
 									execute="@this" render="description" />
@@ -259,6 +259,8 @@
 				</h:form>
 			</ui:decorate>
 		</div>
+		<a style="float: right;"
+			href="#{facesContext.externalContext.requestContextPath}/data/patientData">RDF/XML</a>
 	</ui:define>
 
 	<ui:define name="help">
