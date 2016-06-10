@@ -57,7 +57,7 @@ public class ManagePatientsController extends CrudController<Patient> {
 
 	public void suggestDescription() {
 
-		String name = patient.getAddress().getCity();
+		String name = this.selectedEntity.getAddress().getCity();
 		if (name != null && name.length() > 3) {
 			String query = "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/> "
 					+ "PREFIX dbpprop: <http://dbpedia.org/property/> " + "SELECT ?desc " + "WHERE { "
@@ -69,7 +69,7 @@ public class ManagePatientsController extends CrudController<Patient> {
 			if (results.hasNext()) {
 				QuerySolution querySolution = results.next();
 				Literal literal = querySolution.getLiteral("desc");
-				patient.getAddress().setDescription("" + literal.getValue());
+				this.selectedEntity.getAddress().setDescription("" + literal.getValue());
 			}
 		}
 	}

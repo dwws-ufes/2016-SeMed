@@ -4,6 +4,12 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.rdf.model.Literal;
+
 import br.ufes.inf.nemo.semed.application.ManageExaminationsService;
 import br.ufes.inf.nemo.semed.domain.Doctor;
 import br.ufes.inf.nemo.semed.domain.Examination;
@@ -85,4 +91,24 @@ public class ManageExaminationsController extends CrudController<Examination> {
 		return super.save();
 	}
 
+	public void suggestDiseaseDetail() {
+
+		String name = this.selectedEntity.getDisease();
+		
+		if (name != null && name.length() > 3) {
+			String query = "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/> "
+					+ "PREFIX dbpprop: <http://dbpedia.org/property/> " + "SELECT ?desc " + "WHERE { "
+					+ "?x a dbpedia-owl:Disease ; " + "dbpprop:name ?name ; " + "dbpedia-owl:abstract ?desc . "
+					+ "FILTER (lcase(str(?name)) = \"" + name.toLowerCase() + "\") "
+					+ "FILTER (langMatches(lang(?desc), \"EN\")) " + "}";
+			QueryExecution queryExecution = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", query);
+			ResultSet results = queryExecution.execSelect();
+			if (results.hasNext()) {
+				QuerySolution querySolution = results.next();
+				Literal literal = querySolution.getLiteral("desc");
+				this.selectedEntity.setDiseaseDetail("" + literal.getValue());
+			}
+		}
+	}
+	
 }

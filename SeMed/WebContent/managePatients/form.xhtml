@@ -7,21 +7,21 @@
 	template="/resources/templates/default/decorator.xhtml">
 
 	<ui:define name="title">
-		<h:outputText value="#{msgs['manageSemesters.title.create']}"
+		<h:outputText value="#{msgs['managePatients.title.create']}"
 			rendered="#{(! managePatientsController.readOnly) and (managePatientsController.selectedEntity.id == null)}" />
-		<h:outputText value="#{msgs['manageSemesters.title.update']}"
+		<h:outputText value="#{msgs['managePatients.title.update']}"
 			rendered="#{(! managePatientsController.readOnly) and (managePatientsController.selectedEntity.id != null)}" />
-		<h:outputText value="#{msgs['manageSemesters.title.retrieve']}"
+		<h:outputText value="#{msgs['managePatients.title.retrieve']}"
 			rendered="#{managePatientsController.readOnly}" />
 	</ui:define>
 
 	<ui:define name="body">
 		<h1>
-			<h:outputText value="#{msgs['manageSemesters.title.create']}"
+			<h:outputText value="#{msgs['managePatients.title.create']}"
 				rendered="#{(! managePatientsController.readOnly) and (managePatientsController.selectedEntity.id == null)}" />
-			<h:outputText value="#{msgs['manageSemesters.title.update']}"
+			<h:outputText value="#{msgs['managePatients.title.update']}"
 				rendered="#{(! managePatientsController.readOnly) and (managePatientsController.selectedEntity.id != null)}" />
-			<h:outputText value="#{msgs['manageSemesters.title.retrieve']}"
+			<h:outputText value="#{msgs['managePatients.title.retrieve']}"
 				rendered="#{managePatientsController.readOnly}" />
 		</h1>
 
