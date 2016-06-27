@@ -20,7 +20,6 @@ public class Examination extends PersistentObjectSupport implements Comparable<E
 
 	private String simptomsAndObservations;
 	private String medicePrescription;
-<<<<<<< HEAD
 	@Temporal(TemporalType.DATE) private Date date;
 	
 	@ManyToOne private Patient patient;
@@ -38,19 +37,9 @@ public class Examination extends PersistentObjectSupport implements Comparable<E
 			inverseJoinColumns={@JoinColumn(name="disease_id", referencedColumnName="uuid")})
 	private Set<Disease> diseases;
 	
-	
-=======
 	private String disease;
 	private String diseaseDetail;
-	@Temporal(TemporalType.DATE)
-	private Date date;
 
-	@ManyToOne
-	private Patient patient;
-	@ManyToOne
-	private Doctor doctor;
-
->>>>>>> refs/remotes/origin/guylerme-branch-t2-v0
 	public Examination() {
 		setDate(new Date());
 	}
@@ -94,7 +83,6 @@ public class Examination extends PersistentObjectSupport implements Comparable<E
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
-<<<<<<< HEAD
 	
 	public Set<Drug> getDrugs() {
 		return drugs;
@@ -110,7 +98,7 @@ public class Examination extends PersistentObjectSupport implements Comparable<E
 
 	public void setDiseases(Set<Disease> diseases) {
 		this.diseases = diseases;
-=======
+	}
 
 	public String getDisease() {
 		return disease;
@@ -126,7 +114,6 @@ public class Examination extends PersistentObjectSupport implements Comparable<E
 
 	public void setDiseaseDetail(String diseaseDetail) {
 		this.diseaseDetail = diseaseDetail;
->>>>>>> refs/remotes/origin/guylerme-branch-t2-v0
 	}
 
 	@Override
