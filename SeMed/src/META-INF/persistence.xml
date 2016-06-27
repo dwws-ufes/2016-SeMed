@@ -9,6 +9,8 @@
 		<class>br.ufes.inf.nemo.semed.domain.Address</class>
 		<class>br.ufes.inf.nemo.semed.domain.Doctor</class>
 		<class>br.ufes.inf.nemo.semed.domain.Examination</class>
+		<class>br.ufes.inf.nemo.semed.domain.Drug</class>
+		<class>br.ufes.inf.nemo.semed.domain.Disease</class>
 		<properties>
 			<!-- Properties for Hibernate -->
 			<property name="hibernate.hbm2ddl.auto" value="update" />
