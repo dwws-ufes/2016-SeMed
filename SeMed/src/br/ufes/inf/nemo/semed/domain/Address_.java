@@ -14,4 +14,5 @@ public class Address_ extends PersistentObjectSupport_ {
 	public static volatile SingularAttribute<Address, String> city;
 	public static volatile SingularAttribute<Address, String> state;
 	public static volatile SingularAttribute<Address, String> zipCode;
+	public static volatile SingularAttribute<Address, String> description;
 }

@@ -20,6 +20,7 @@ public class Examination extends PersistentObjectSupport implements Comparable<E
 
 	private String simptomsAndObservations;
 	private String medicePrescription;
+<<<<<<< HEAD
 	@Temporal(TemporalType.DATE) private Date date;
 	
 	@ManyToOne private Patient patient;
@@ -38,26 +39,38 @@ public class Examination extends PersistentObjectSupport implements Comparable<E
 	private Set<Disease> diseases;
 	
 	
+=======
+	private String disease;
+	private String diseaseDetail;
+	@Temporal(TemporalType.DATE)
+	private Date date;
+
+	@ManyToOne
+	private Patient patient;
+	@ManyToOne
+	private Doctor doctor;
+
+>>>>>>> refs/remotes/origin/guylerme-branch-t2-v0
 	public Examination() {
 		setDate(new Date());
 	}
-	
+
 	public String getMedicePrescription() {
 		return medicePrescription;
 	}
-	
+
 	public void setMedicePrescription(String medicePrescription) {
 		this.medicePrescription = medicePrescription;
 	}
-	
+
 	public String getSimptomsAndObservations() {
 		return simptomsAndObservations;
 	}
-	
+
 	public void setSimptomsAndObservations(String simptomsAndObservations) {
 		this.simptomsAndObservations = simptomsAndObservations;
 	}
-	
+
 	public Date getDate() {
 		return date;
 	}
@@ -69,18 +82,19 @@ public class Examination extends PersistentObjectSupport implements Comparable<E
 	public Patient getPatient() {
 		return patient;
 	}
-	
+
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
-	
+
 	public Doctor getDoctor() {
 		return doctor;
 	}
-	
+
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
+<<<<<<< HEAD
 	
 	public Set<Drug> getDrugs() {
 		return drugs;
@@ -96,13 +110,32 @@ public class Examination extends PersistentObjectSupport implements Comparable<E
 
 	public void setDiseases(Set<Disease> diseases) {
 		this.diseases = diseases;
+=======
+
+	public String getDisease() {
+		return disease;
+	}
+
+	public void setDisease(String disease) {
+		this.disease = disease;
+	}
+
+	public String getDiseaseDetail() {
+		return diseaseDetail;
+	}
+
+	public void setDiseaseDetail(String diseaseDetail) {
+		this.diseaseDetail = diseaseDetail;
+>>>>>>> refs/remotes/origin/guylerme-branch-t2-v0
 	}
 
 	@Override
 	public int compareTo(Examination o) {
-		if(o == null || o.getId() == null)	return 1;
-		if(getId() == null)					return 1;
+		if (o == null || o.getId() == null)
+			return 1;
+		if (getId() == null)
+			return 1;
 		return Long.compare(getId(), o.getId());
 	}
-	
+
 }

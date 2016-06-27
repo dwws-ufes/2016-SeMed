@@ -14,14 +14,15 @@ import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 public class Doctor extends PersistentObjectSupport implements Comparable<Doctor> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String firstName;
 	private String surname;
 	private String cpf;
-	@Temporal(TemporalType.DATE) private Date birthDate;
+	@Temporal(TemporalType.DATE)
+	private Date birthDate;
 	private String professionalId;
-	
-	@OneToOne(cascade=CascadeType.ALL)
+
+	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
 
 	public String getFirstName() {
@@ -39,8 +40,8 @@ public class Doctor extends PersistentObjectSupport implements Comparable<Doctor
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	
-	public String getFullName(){
+
+	public String getFullName() {
 		return getFirstName() + " " + getSurname();
 	}
 
@@ -82,9 +83,12 @@ public class Doctor extends PersistentObjectSupport implements Comparable<Doctor
 
 	@Override
 	public int compareTo(Doctor o) {
-		if(o == null)					return 1;
-		if(o.getFirstName() == null)	return 1;
-		if(getFirstName() == null)		return -1;
+		if (o == null)
+			return 1;
+		if (o.getFirstName() == null)
+			return 1;
+		if (getFirstName() == null)
+			return -1;
 		return getFirstName().compareTo(o.getFirstName());
 	}
 

@@ -15,6 +15,7 @@ public class Address extends PersistentObjectSupport implements Comparable<Addre
 	private String city;
 	private String state;
 	private String zipCode;
+	private String description;
 
 	public String getStreet() {
 		return street;
@@ -69,6 +70,14 @@ public class Address extends PersistentObjectSupport implements Comparable<Addre
 		if(o == null || o.getZipCode() == null)		return 1;
 		if(getZipCode() == null)					return -1;
 		return getZipCode().compareTo(o.getZipCode());
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }
