@@ -103,6 +103,9 @@
 								#{entity.referenceResource}
 							</h:outputLink>
 						</p:column>
+						<p:column headerText="Resource" style="width:75px;">
+							<a href="#{facesContext.externalContext.requestContextPath}/data/drugData/#{entity.id}">RDF/XML</a>
+						</p:column>
 
 						<p:ajax event="rowSelect" update=":buttonsForm" />
 					</p:dataTable>

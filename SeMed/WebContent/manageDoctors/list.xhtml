@@ -96,9 +96,6 @@
 						<p:column headerText="Surname">
 							<h:outputText value="#{entity.surname}" />
 						</p:column>
-						<p:column headerText="CPF">
-							<h:outputText value="#{entity.cpf}" />
-						</p:column>
 						<p:column headerText="Birth Date"
 							style="width:75px;">
 							<h:outputFormat value="#{entity.birthDate}">
@@ -114,6 +111,9 @@
 						</p:column>
 						<p:column headerText="State">
 							<h:outputText value="#{entity.address.state}" />
+						</p:column>
+						<p:column headerText="Resource">
+							<a href="#{facesContext.externalContext.requestContextPath}/data/doctorData/#{entity.id}">RDF/XML</a>
 						</p:column>
 
 						<p:ajax event="rowSelect" update=":buttonsForm" />
