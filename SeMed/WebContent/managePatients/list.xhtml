@@ -109,6 +109,9 @@
 						<p:column headerText="State">
 							<h:outputText value="#{entity.address.state}" />
 						</p:column>
+						<p:column headerText="Resource">
+							<a href="#{facesContext.externalContext.requestContextPath}/data/doctorData/#{entity.id}">RDF/XML</a>
+						</p:column>
 
 						<p:ajax event="rowSelect" update=":buttonsForm" />
 					</p:dataTable>

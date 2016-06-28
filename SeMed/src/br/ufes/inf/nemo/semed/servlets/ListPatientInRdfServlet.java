@@ -24,6 +24,7 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
+import br.ufes.inf.nemo.semed.domain.Doctor;
 import br.ufes.inf.nemo.semed.domain.Patient;
 import br.ufes.inf.nemo.semed.persistence.PatientDAO;
 
@@ -31,11 +32,11 @@ import br.ufes.inf.nemo.semed.persistence.PatientDAO;
  * Servlet implementation class ListPatientInRdfServlet
  */
 
-@WebServlet(urlPatterns = { "/data/patientData" })
+@WebServlet(urlPatterns = { ListPatientInRdfServlet.urlPattern, ListPatientInRdfServlet.urlPattern + "/*" })
 public class ListPatientInRdfServlet extends HttpServlet {
-	/**
-	 * 
-	 */
+	
+	public static final String urlPattern = "/data/patientData";
+	
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger logger = Logger.getLogger(ListPatientInRdfServlet.class.getCanonicalName());
@@ -51,33 +52,83 @@ public class ListPatientInRdfServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		if(req.getPathInfo()==null) {
+			allPatientsRDFResponse(resp);
+		} else {
+			trySinglePatientRDFResponse(req,resp);
+		}
+	}
+	
+	private void trySinglePatientRDFResponse(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		String pathInfo = req.getPathInfo();
+		logger.log(Level.INFO, "Retrieving URL" + pathInfo);
+		long id = -1;
+		Patient p = null;
+		
+		try{
+			id = Long.parseUnsignedLong(pathInfo.substring(1));
+			p = patientDAO.retrieveById(id);
+		} catch (NumberFormatException e) {
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+			return ;
+		}
+		
+		if(p==null){
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+		} else {
+			resp.setContentType("text/xml");
+			Model model = ModelFactory.createDefaultModel();
+//			String myNS = NSUtils.SEMED_NS;
+//			String grNS = NSUtils.GR_NS;
+			model.setNsPrefix(NSUtils.SEMED_PREFIX, NSUtils.SEMED_NS);
+			model.setNsPrefix(NSUtils.GR_PREFIX, NSUtils.GR_NS);
+			addPatientToModel(model, p);
+			logger.log(Level.INFO, "Added Doctor/" + p.getId() + " to the RDF model");
+
+			try (PrintWriter out = resp.getWriter()) {
+				model.write(out, "RDF/XML");
+			}
+		}
+	}
+
+	private void allPatientsRDFResponse(HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/xml");
-
 		List<Patient> patients = patientDAO.retrieveAll();
-
 		Model model = ModelFactory.createDefaultModel();
-		String myNS = "http://localhost:8080/SeMed/data/patientData/";
-		String grNS = "http://purl.org/goodrelations/v1#";
-		model.setNsPrefix("gr", grNS);
-		Resource grFullName = ResourceFactory.createResource(grNS + "FullName");
-		Property grCpf = ResourceFactory.createProperty(grNS + "Cpf");
-		Property grBirthDate = ResourceFactory.createProperty(grNS + "BirthDate");
+		model.setNsPrefix(NSUtils.SEMED_PREFIX, NSUtils.SEMED_NS);
+		model.setNsPrefix(NSUtils.GR_PREFIX, NSUtils.GR_NS);
 
 		for (Patient patient : patients) {
-			model.createResource(myNS + patient.getId()).addProperty(RDF.type, grFullName)
-					.addProperty(RDFS.label, patient.getFullName()).addProperty(RDFS.comment, patient.getSurname())
-					.addLiteral(grBirthDate,
-							ResourceFactory.createTypedLiteral(df.format(patient.getBirthDate()),
-									XSDDatatype.XSDdateTime))
-					.addProperty(grCpf, model.createResource().addProperty(RDF.type, grCpf).addLiteral(grCpf,
-							patient.getCpf().toString()));
-
-			logger.log(Level.INFO, "Added TourPackage/" + patient.getId() + " to the RDF model");
+			addPatientToModel(model, patient);
 		}
 
 		try (PrintWriter out = resp.getWriter()) {
 			model.write(out, "RDF/XML");
 		}
+	}
+	
+	private void addPatientToModel(Model model, Patient p){
+		Property semedFirstName = ResourceFactory.createProperty(NSUtils.SEMED_PROP_FIRST_NAME);
+		Property semedSurname = ResourceFactory.createProperty(NSUtils.SEMED_PROP_SURNAME);
+		Property semedBirthDate = ResourceFactory.createProperty(NSUtils.SEMED_PROP_BIRTH_DATE);
+		Property semedCpf = ResourceFactory.createProperty(NSUtils.SEMED_PROP_CPF);
+		Property semedStreet = ResourceFactory.createProperty(NSUtils.SEMED_PROP_STREET);
+		Property semedNumber = ResourceFactory.createProperty(NSUtils.SEMED_PROP_NUMBER);
+		Property semedCity = ResourceFactory.createProperty(NSUtils.SEMED_PROP_CITY);
+		Property semedZipCode = ResourceFactory.createProperty(NSUtils.SEMED_PROP_ZIP_CODE);
+		Property semedState = ResourceFactory.createProperty(NSUtils.SEMED_PROP_STATE);
+		
+		model.createResource("http://www.semed.com/SeMed"+urlPattern+"/"+p.getId())
+				.addProperty(RDF.type, NSUtils.SEMED_PATIENT)
+				.addProperty(semedFirstName,p.getFirstName())
+				.addProperty(semedSurname, p.getSurname())
+				.addProperty(semedBirthDate, ResourceFactory.createTypedLiteral(df.format(p.getBirthDate()), XSDDatatype.XSDdateTime))
+				.addProperty(semedCpf,p.getCpf())
+				.addProperty(semedStreet,p.getAddress().getStreet())
+				.addProperty(semedNumber,p.getAddress().getNumber()+"")
+				.addProperty(semedCity,p.getAddress().getCity())
+				.addProperty(semedZipCode,p.getAddress().getZipCode())
+				.addProperty(semedState,p.getAddress().getState());
 	}
 
 }

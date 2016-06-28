@@ -575,9 +575,9 @@
     
 
 
-    <!-- http://www.semed.com/semed_ontology#referenceDescription -->
+    <!-- http://www.semed.com/semed_ontology#referenceResource1 -->
 
-    <owl:DatatypeProperty rdf:about="http://www.semed.com/semed_ontology#referenceDescription">
+    <owl:DatatypeProperty rdf:about="http://www.semed.com/semed_ontology#referenceResource1">
         <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Drug"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">referenceDescription</rdfs:label>
@@ -585,9 +585,9 @@
     
 
 
-    <!-- http://www.semed.com/semed_ontology#referenceresource -->
+    <!-- http://www.semed.com/semed_ontology#referenceResource2 -->
 
-    <owl:DatatypeProperty rdf:about="http://www.semed.com/semed_ontology#referenceresource">
+    <owl:DatatypeProperty rdf:about="http://www.semed.com/semed_ontology#referenceResource2">
         <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Disease"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">referenceresource</rdfs:label>
@@ -723,7 +723,7 @@
                         <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
                     </owl:Restriction>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#referenceresource"/>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#referenceResource1"/>
                         <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
                     </owl:Restriction>
                 </owl:intersectionOf>
@@ -755,7 +755,7 @@
                         <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
                     </owl:Restriction>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#referenceDescription"/>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#referenceResource2"/>
                         <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
                     </owl:Restriction>
                 </owl:intersectionOf>
