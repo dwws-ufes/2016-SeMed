@@ -112,6 +112,7 @@ public class ListPatientInRdfServlet extends HttpServlet {
 		Property semedSurname = ResourceFactory.createProperty(NSUtils.SEMED_PROP_SURNAME);
 		Property semedBirthDate = ResourceFactory.createProperty(NSUtils.SEMED_PROP_BIRTH_DATE);
 		Property semedCpf = ResourceFactory.createProperty(NSUtils.SEMED_PROP_CPF);
+		Property semedAddress = ResourceFactory.createProperty(NSUtils.SEMED_PROP_ADDRESS);
 		Property semedStreet = ResourceFactory.createProperty(NSUtils.SEMED_PROP_STREET);
 		Property semedNumber = ResourceFactory.createProperty(NSUtils.SEMED_PROP_NUMBER);
 		Property semedCity = ResourceFactory.createProperty(NSUtils.SEMED_PROP_CITY);
@@ -124,11 +125,13 @@ public class ListPatientInRdfServlet extends HttpServlet {
 				.addProperty(semedSurname, p.getSurname())
 				.addProperty(semedBirthDate, ResourceFactory.createTypedLiteral(df.format(p.getBirthDate()), XSDDatatype.XSDdateTime))
 				.addProperty(semedCpf,p.getCpf())
-				.addProperty(semedStreet,p.getAddress().getStreet())
-				.addProperty(semedNumber,p.getAddress().getNumber()+"")
-				.addProperty(semedCity,p.getAddress().getCity())
-				.addProperty(semedZipCode,p.getAddress().getZipCode())
-				.addProperty(semedState,p.getAddress().getState());
+				.addProperty(semedAddress, model.createResource()
+						.addProperty(RDF.type, NSUtils.SEMED_ADDRESS)
+						.addProperty(semedStreet,p.getAddress().getStreet())
+						.addProperty(semedNumber,p.getAddress().getNumber()+"")
+						.addProperty(semedCity,p.getAddress().getCity())
+						.addProperty(semedZipCode,p.getAddress().getZipCode())
+						.addProperty(semedState,p.getAddress().getState()));
 	}
 
 }

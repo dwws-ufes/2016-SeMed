@@ -18,6 +18,8 @@
 		<div class="crud">
 			<!-- Filter bar: used to filter the listing (displayed when there is at least one filter available). -->
 			<h:form id="filterForm">
+				<p><p:button value="Export patients (RDFXML)" target="_blank" href="/data/patientData"/></p>
+				
 				<h:panelGroup id="filterBar"
 					rendered="#{(not empty managePatientsController.filters)}">
 					<div class="crudFilterBar">
@@ -110,7 +112,7 @@
 							<h:outputText value="#{entity.address.state}" />
 						</p:column>
 						<p:column headerText="Resource">
-							<a href="#{facesContext.externalContext.requestContextPath}/data/doctorData/#{entity.id}">RDF/XML</a>
+							<a href="#{facesContext.externalContext.requestContextPath}/data/patientData/#{entity.id}">RDF/XML</a>
 						</p:column>
 
 						<p:ajax event="rowSelect" update=":buttonsForm" />

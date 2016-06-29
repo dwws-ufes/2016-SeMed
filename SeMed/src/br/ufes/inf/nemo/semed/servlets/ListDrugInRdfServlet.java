@@ -28,7 +28,7 @@ import br.ufes.inf.nemo.semed.persistence.DrugDAO;
 @WebServlet(urlPatterns = { ListDrugInRdfServlet.urlPattern, ListDrugInRdfServlet.urlPattern + "/*" })
 public class ListDrugInRdfServlet extends HttpServlet {
 
-public static final String urlPattern = "/data/drugData";
+	public static final String urlPattern = "/data/drugData";
 	
 	private static final long serialVersionUID = 1L;
 
@@ -98,12 +98,10 @@ public static final String urlPattern = "/data/drugData";
 	
 	private void addDrugToModel(Model model, Drug d){
 		Property semedName = ResourceFactory.createProperty(NSUtils.SEMED_PROP_DRUG_NAME);
-		Property semedReferenceResource = ResourceFactory.createProperty(NSUtils.SEMED_PROP_DRUG_SOURCE);
 		
 		model.createResource("http://www.semed.com/SeMed"+urlPattern+"/"+d.getId())
 				.addProperty(RDF.type, NSUtils.SEMED_DRUG)
 				.addProperty(semedName, d.getName())
-				.addProperty(semedReferenceResource, d.getReferenceResource())
 				.addProperty(OWL2.sameAs, d.getReferenceResource());
 	}
 	

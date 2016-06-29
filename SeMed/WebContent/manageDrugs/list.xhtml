@@ -19,9 +19,11 @@
 			
 			<!-- Filter bar: used to filter the listing (displayed when there is at least one filter available). -->
 			<h:form id="filterForm">
-				<p><p:commandLink id="importDrgus" actionListener="#{manageDrugsController.importDrugs}" ajax="false">
-					<h:outputText value="Import drugs"/>
-				</p:commandLink></p>
+				<p>
+				<p:commandButton id="importDrugs" value="Import Drugs" 
+					actionListener="#{manageDrugsController.importDrugs}" ajax="false" />
+				<p:button value="Export Drugs (RDFXML)" target="_blank" href="/data/drugData"/>
+				</p>
 				
 				<h:panelGroup id="filterBar"
 					rendered="#{(not empty manageDrugsController.filters)}">
@@ -153,7 +155,7 @@
 					rendered="#{not empty manageDrugsController.trashCan}">
 					<p:dataList value="#{manageDrugsController.trashCan}"
 						var="entity" type="unordered">
-                        #{entity.firstName}
+                        #{entity.name}
                     </p:dataList>
 					<div class="nemoUtilsFormInternalButton">
 						<p:commandButton

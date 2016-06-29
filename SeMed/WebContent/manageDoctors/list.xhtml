@@ -18,6 +18,8 @@
 		<div class="crud">
 			<!-- Filter bar: used to filter the listing (displayed when there is at least one filter available). -->
 			<h:form id="filterForm">
+				<p><p:button value="Export Doctors (RDFXML)" target="_blank" href="/data/doctorData"/></p>
+			
 				<h:panelGroup id="filterBar"
 					rendered="#{(not empty manageDoctorsController.filters)}">
 					<div class="crudFilterBar">

@@ -98,12 +98,10 @@ public class ListDiseaseInRdfServlet extends HttpServlet {
 	
 	private void addDiseaseToModel(Model model, Disease d){
 		Property semedName = ResourceFactory.createProperty(NSUtils.SEMED_PROP_DISEASE_NAME);
-		Property semedReferenceResource = ResourceFactory.createProperty(NSUtils.SEMED_PROP_DISEASE_SOURCE);
 		
 		model.createResource("http://www.semed.com/SeMed"+urlPattern+"/"+d.getId())
 				.addProperty(RDF.type, NSUtils.SEMED_DISEASE)
 				.addProperty(semedName, d.getName())
-				.addProperty(semedReferenceResource, d.getReferenceResource())
 				.addProperty(OWL2.sameAs, d.getReferenceResource());
 	}
 	
