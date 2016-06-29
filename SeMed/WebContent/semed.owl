@@ -7,7 +7,10 @@
      xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
      xmlns:swrl="http://www.w3.org/2003/11/swrl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+     xmlns:drugbank_vocabulary="http://bio2rdf.org/drugbank_vocabulary:"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:pharmgkb_vocabulary="http://bio2rdf.org/pharmgkb_vocabulary:"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/">
     <owl:Ontology rdf:about="http://www.semed.com/semed_ontology#"/>
     
 
@@ -410,13 +413,37 @@
     
 
 
-    <!-- http://www.semed.com/semed_ontology#disease -->
+    <!-- http://www.semed.com/semed_ontology#address -->
 
-    <owl:ObjectProperty rdf:about="http://www.semed.com/semed_ontology#disease">
+    <owl:ObjectProperty rdf:about="http://www.semed.com/semed_ontology#address">
         <rdfs:subPropertyOf rdf:resource="http://www.menthor.net/ontouml#formalProperty"/>
+        <owl:inverseOf rdf:resource="http://www.semed.com/semed_ontology#person"/>
+        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Person"/>
+        <rdfs:range rdf:resource="http://www.semed.com/semed_ontology#Address"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">address</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semed.com/semed_ontology#diagnosedDiseases -->
+
+    <owl:ObjectProperty rdf:about="http://www.semed.com/semed_ontology#diagnosedDiseases">
+        <rdfs:subPropertyOf rdf:resource="http://www.menthor.net/ontouml#formalProperty"/>
+        <owl:inverseOf rdf:resource="http://www.semed.com/semed_ontology#diagnosedIn"/>
         <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
         <rdfs:range rdf:resource="http://www.semed.com/semed_ontology#Disease"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">diagnoses</rdfs:label>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">diagnosedDiseases</rdfs:label>
+    </owl:ObjectProperty>
+	    
+
+
+    <!-- http://www.semed.com/semed_ontology#diagnosedIn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semed.com/semed_ontology#diagnosedIn">
+        <rdfs:subPropertyOf rdf:resource="http://www.menthor.net/ontouml#formalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Disease"/>
+        <rdfs:range rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">diagnosedIn</rdfs:label>
     </owl:ObjectProperty>
     
 
@@ -425,6 +452,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semed.com/semed_ontology#doctor">
         <rdfs:subPropertyOf rdf:resource="http://www.menthor.net/ontouml#mediates"/>
+        <owl:inverseOf rdf:resource="http://www.semed.com/semed_ontology#doctorExaminations"/>
         <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
         <rdfs:range rdf:resource="http://www.semed.com/semed_ontology#Doctor"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">doctor</rdfs:label>
@@ -432,13 +460,60 @@
     
 
 
-    <!-- http://www.semed.com/semed_ontology#drug -->
+    <!-- http://www.semed.com/semed_ontology#doctorExaminations -->
 
-    <owl:ObjectProperty rdf:about="http://www.semed.com/semed_ontology#drug">
+    <owl:ObjectProperty rdf:about="http://www.semed.com/semed_ontology#doctorExaminations">
+        <rdfs:subPropertyOf rdf:resource="http://www.menthor.net/ontouml#mediatedBy"/>
+        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Doctor"/>
+        <rdfs:range rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">doctorExaminations</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semed.com/semed_ontology#drugsPrecription -->
+
+    <owl:ObjectProperty rdf:about="http://www.semed.com/semed_ontology#drugsPrecription">
         <rdfs:subPropertyOf rdf:resource="http://www.menthor.net/ontouml#formalProperty"/>
+        <owl:inverseOf rdf:resource="http://www.semed.com/semed_ontology#prescriptedIn"/>
         <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
         <rdfs:range rdf:resource="http://www.semed.com/semed_ontology#Drug"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">prescription</rdfs:label>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">drugsPrecription</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semed.com/semed_ontology#examination -->
+
+    <owl:ObjectProperty rdf:about="http://www.semed.com/semed_ontology#examination">
+        <rdfs:subPropertyOf rdf:resource="http://www.menthor.net/ontouml#formalProperty"/>
+        <owl:inverseOf rdf:resource="http://www.semed.com/semed_ontology#examination1"/>
+        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
+        <rdfs:range rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">examination</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semed.com/semed_ontology#examination1 -->
+
+    <owl:ObjectProperty rdf:about="http://www.semed.com/semed_ontology#examination1">
+        <rdfs:subPropertyOf rdf:resource="http://www.menthor.net/ontouml#formalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
+        <rdfs:range rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">examination</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semed.com/semed_ontology#examination2 -->
+
+    <owl:ObjectProperty rdf:about="http://www.semed.com/semed_ontology#examination2">
+        <rdfs:subPropertyOf rdf:resource="http://www.menthor.net/ontouml#formalProperty"/>
+        <owl:inverseOf rdf:resource="http://www.semed.com/semed_ontology#examination2"/>
+        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
+        <rdfs:range rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">examination</rdfs:label>
     </owl:ObjectProperty>
     
 
@@ -447,9 +522,43 @@
 
     <owl:ObjectProperty rdf:about="http://www.semed.com/semed_ontology#patient">
         <rdfs:subPropertyOf rdf:resource="http://www.menthor.net/ontouml#mediates"/>
+        <owl:inverseOf rdf:resource="http://www.semed.com/semed_ontology#patientExamination"/>
         <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
         <rdfs:range rdf:resource="http://www.semed.com/semed_ontology#Patient"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">patient</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semed.com/semed_ontology#patientExamination -->
+
+    <owl:ObjectProperty rdf:about="http://www.semed.com/semed_ontology#patientExamination">
+        <rdfs:subPropertyOf rdf:resource="http://www.menthor.net/ontouml#mediatedBy"/>
+        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Patient"/>
+        <rdfs:range rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">patientExamination</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semed.com/semed_ontology#person -->
+
+    <owl:ObjectProperty rdf:about="http://www.semed.com/semed_ontology#person">
+        <rdfs:subPropertyOf rdf:resource="http://www.menthor.net/ontouml#formalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Address"/>
+        <rdfs:range rdf:resource="http://www.semed.com/semed_ontology#Person"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">person</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semed.com/semed_ontology#prescriptedIn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semed.com/semed_ontology#prescriptedIn">
+        <rdfs:subPropertyOf rdf:resource="http://www.menthor.net/ontouml#formalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Drug"/>
+        <rdfs:range rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">prescriptedIn</rdfs:label>
     </owl:ObjectProperty>
     
 
@@ -478,7 +587,7 @@
     <!-- http://www.semed.com/semed_ontology#city -->
 
     <owl:DatatypeProperty rdf:about="http://www.semed.com/semed_ontology#city">
-        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Person"/>
+        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Address"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">city</rdfs:label>
     </owl:DatatypeProperty>
@@ -505,6 +614,26 @@
     
 
 
+    <!-- http://www.semed.com/semed_ontology#diseaseName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semed.com/semed_ontology#diseaseName">
+        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Disease"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">diseaseName</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semed.com/semed_ontology#drugName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semed.com/semed_ontology#drugName">
+        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Drug"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">drugName</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semed.com/semed_ontology#firstName -->
 
     <owl:DatatypeProperty rdf:about="http://www.semed.com/semed_ontology#firstName">
@@ -515,30 +644,10 @@
     
 
 
-    <!-- http://www.semed.com/semed_ontology#name1 -->
-
-    <owl:DatatypeProperty rdf:about="http://www.semed.com/semed_ontology#name1">
-        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Disease"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">name</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.semed.com/semed_ontology#name2 -->
-
-    <owl:DatatypeProperty rdf:about="http://www.semed.com/semed_ontology#name2">
-        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Drug"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">name</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
-
     <!-- http://www.semed.com/semed_ontology#number -->
 
     <owl:DatatypeProperty rdf:about="http://www.semed.com/semed_ontology#number">
-        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Person"/>
+        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Address"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">number</rdfs:label>
     </owl:DatatypeProperty>
@@ -575,30 +684,10 @@
     
 
 
-    <!-- http://www.semed.com/semed_ontology#referenceResource1 -->
-
-    <owl:DatatypeProperty rdf:about="http://www.semed.com/semed_ontology#referenceResource1">
-        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Drug"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">referenceDescription</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.semed.com/semed_ontology#referenceResource2 -->
-
-    <owl:DatatypeProperty rdf:about="http://www.semed.com/semed_ontology#referenceResource2">
-        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Disease"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">referenceresource</rdfs:label>
-    </owl:DatatypeProperty>
-    
-
-
     <!-- http://www.semed.com/semed_ontology#state -->
 
     <owl:DatatypeProperty rdf:about="http://www.semed.com/semed_ontology#state">
-        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Person"/>
+        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Address"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">state</rdfs:label>
     </owl:DatatypeProperty>
@@ -608,7 +697,7 @@
     <!-- http://www.semed.com/semed_ontology#street -->
 
     <owl:DatatypeProperty rdf:about="http://www.semed.com/semed_ontology#street">
-        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Person"/>
+        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Address"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">street</rdfs:label>
     </owl:DatatypeProperty>
@@ -628,7 +717,7 @@
     <!-- http://www.semed.com/semed_ontology#zipCode -->
 
     <owl:DatatypeProperty rdf:about="http://www.semed.com/semed_ontology#zipCode">
-        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Person"/>
+        <rdfs:domain rdf:resource="http://www.semed.com/semed_ontology#Address"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zipCode</rdfs:label>
     </owl:DatatypeProperty>
@@ -712,6 +801,46 @@
     
 
 
+    <!-- http://www.semed.com/semed_ontology#Address -->
+
+    <owl:Class rdf:about="http://www.semed.com/semed_ontology#Address">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#person"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="http://www.semed.com/semed_ontology#Person"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#city"/>
+                        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#number"/>
+                        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#state"/>
+                        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#street"/>
+                        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#zipCode"/>
+                        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.menthor.net/ontouml#FunctionalComplex"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Address</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://www.semed.com/semed_ontology#Disease -->
 
     <owl:Class rdf:about="http://www.semed.com/semed_ontology#Disease">
@@ -719,11 +848,7 @@
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#name1"/>
-                        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-                    </owl:Restriction>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#referenceResource1"/>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#diseaseName"/>
                         <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
                     </owl:Restriction>
                 </owl:intersectionOf>
@@ -738,6 +863,21 @@
     <!-- http://www.semed.com/semed_ontology#Doctor -->
 
     <owl:Class rdf:about="http://www.semed.com/semed_ontology#Doctor">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#doctorExaminations"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#professionalId"/>
+                        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="http://www.semed.com/semed_ontology#Person"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Doctor</rdfs:label>
     </owl:Class>
@@ -751,11 +891,7 @@
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#name2"/>
-                        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-                    </owl:Restriction>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#referenceResource2"/>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#drugName"/>
                         <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
                     </owl:Restriction>
                 </owl:intersectionOf>
@@ -770,6 +906,41 @@
     <!-- http://www.semed.com/semed_ontology#Examination -->
 
     <owl:Class rdf:about="http://www.semed.com/semed_ontology#Examination">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#doctor"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="http://www.semed.com/semed_ontology#Doctor"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#examination"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#examination1"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#examination2"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#patient"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="http://www.semed.com/semed_ontology#Patient"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#date"/>
+                        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
         <rdfs:subClassOf>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -793,6 +964,17 @@
     <!-- http://www.semed.com/semed_ontology#Patient -->
 
     <owl:Class rdf:about="http://www.semed.com/semed_ontology#Patient">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#patientExamination"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="http://www.semed.com/semed_ontology#Examination"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="http://www.semed.com/semed_ontology#Person"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Patient</rdfs:label>
     </owl:Class>
@@ -806,11 +988,12 @@
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#birthDate"/>
-                        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#address"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="http://www.semed.com/semed_ontology#Address"/>
                     </owl:Restriction>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#city"/>
+                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#birthDate"/>
                         <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
                     </owl:Restriction>
                     <owl:Restriction>
@@ -822,23 +1005,7 @@
                         <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
                     </owl:Restriction>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#number"/>
-                        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-                    </owl:Restriction>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#state"/>
-                        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-                    </owl:Restriction>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#street"/>
-                        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-                    </owl:Restriction>
-                    <owl:Restriction>
                         <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#surname"/>
-                        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
-                    </owl:Restriction>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.semed.com/semed_ontology#zipCode"/>
                         <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
                     </owl:Restriction>
                 </owl:intersectionOf>
@@ -880,6 +1047,24 @@
             <rdf:Description rdf:about="http://www.menthor.net/ontouml#Mode"/>
             <rdf:Description rdf:about="http://www.menthor.net/ontouml#Quality"/>
             <rdf:Description rdf:about="http://www.menthor.net/ontouml#Relator"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointProperties"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semed.com/semed_ontology#address"/>
+            <rdf:Description rdf:about="http://www.semed.com/semed_ontology#diagnosedDiseases"/>
+            <rdf:Description rdf:about="http://www.semed.com/semed_ontology#diagnosedIn"/>
+            <rdf:Description rdf:about="http://www.semed.com/semed_ontology#doctor"/>
+            <rdf:Description rdf:about="http://www.semed.com/semed_ontology#doctorExaminations"/>
+            <rdf:Description rdf:about="http://www.semed.com/semed_ontology#drugsPrecription"/>
+            <rdf:Description rdf:about="http://www.semed.com/semed_ontology#examination"/>
+            <rdf:Description rdf:about="http://www.semed.com/semed_ontology#examination1"/>
+            <rdf:Description rdf:about="http://www.semed.com/semed_ontology#examination2"/>
+            <rdf:Description rdf:about="http://www.semed.com/semed_ontology#patient"/>
+            <rdf:Description rdf:about="http://www.semed.com/semed_ontology#patientExamination"/>
+            <rdf:Description rdf:about="http://www.semed.com/semed_ontology#person"/>
+            <rdf:Description rdf:about="http://www.semed.com/semed_ontology#prescriptedIn"/>
         </owl:members>
     </rdf:Description>
     
