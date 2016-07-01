@@ -31,6 +31,26 @@
 					<p:hotkey bind="#{msgs['crud.hotkey.focusFirstField']}"
 						handler="findObjectById('form:firstName').focus();" />
 
+					<h:panelGroup id="dateField">
+						<ui:decorate
+							template="/resources/templates/default/formfield.xhtml">
+							<ui:param name="fieldName" value="form:date" />
+							<ui:param name="tooltip" value="Consult Date" />
+							<ui:define name="label">
+								<h:outputText value="Consult Date" />
+							</ui:define>
+							<p:inputMask id="date" mask="#{msgs['format.date.primefaces']}"
+								value="#{manageExaminationsController.selectedEntity.date}"
+								size="10" required="true"
+								disabled="#{manageExaminationsController.readOnly}">
+								<p:ajax event="blur" update="dateField" />
+								<f:convertDateTime type="date"
+									pattern="#{msgs['format.date.java']}" />
+								<h:outputText value=" (#{msgs['format.date.label']})" />
+							</p:inputMask>
+						</ui:decorate>
+					</h:panelGroup>
+
 					<h:panelGroup id="simptomsAndObservationsField">
 						<ui:decorate
 							template="/resources/templates/default/formfield.xhtml">
@@ -47,80 +67,61 @@
 							</p:inputTextarea>
 						</ui:decorate>
 					</h:panelGroup>
-					<h:panelGroup id="medicePrescriptionField">
-						<ui:decorate
-							template="/resources/templates/default/formfield.xhtml">
-							<ui:param name="fieldName" value="form:medicePrescription" />
-							<ui:param name="tooltip" value="Medice Prescription" />
-							<ui:define name="label">
-								<h:outputText value="medicePrescription" />
-							</ui:define>
-							<p:inputTextarea id="medicePrescription"
-								value="#{manageExaminationsController.selectedEntity.medicePrescription}"
-								size="50" required="true"
-								disabled="#{manageExaminationsController.readOnly}">
-								<p:ajax event="blur" update="medicePrescriptionField" />
-							</p:inputTextarea>
-						</ui:decorate>
-					</h:panelGroup>
-					
-					<h:panelGroup id="diseaseField">
-						<ui:decorate
-							template="/resources/templates/default/formfield.xhtml">
-							<ui:param name="disease" value="form:disease" />
-							<ui:param name="tooltip" value="Disease" />
-							<ui:define name="label">
-								<h:outputText value="Disease" />
-							</ui:define>
-							<p:inputTextarea id="disease"
-								value="#{manageExaminationsController.selectedEntity.disease}"
-								size="50" required="true"
-								disabled="#{manageExaminationsController.readOnly}">
-								<p:ajax event="blur" update="disease" />
-							</p:inputTextarea>
-						</ui:decorate>
-					</h:panelGroup>
-					
-					<h:panelGroup id="diseaseDetailField">
-						<ui:decorate
-							template="/resources/templates/default/formfield.xhtml">
-							<ui:param name="diseaseDetail" value="form:diseaseDetail" />
-							<ui:param name="tooltip" value="Disease Detail" />
-							<ui:define name="label">
-								<h:outputText value="Disease Detail" />
-							</ui:define>
-							<p:inputText id="diseaseDetail"
-								value="#{manageExaminationsController.selectedEntity.diseaseDetail}"
-								size="100" required="false"
-								disabled="#{manageExaminationsController.readOnly}">
-								<!-- 								<p:ajax event="blur" update="descriptionField" /> -->
-								<f:ajax event="blur"
-									listener="#{manageExaminationsController.suggestDiseaseDetail}"
-									execute="@this" render="diseaseDetail" />
-							</p:inputText>
-						</ui:decorate>
-					</h:panelGroup>
-					
-					<h:panelGroup id="dateField">
-						<ui:decorate
-							template="/resources/templates/default/formfield.xhtml">
-							<ui:param name="fieldName" value="form:date" />
-							<ui:param name="tooltip" value="Consult Date" />
-							<ui:define name="label">
-								<h:outputText value="Consult Date" />
-							</ui:define>
-							<p:inputMask id="date"
-								mask="#{msgs['format.date.primefaces']}"
-								value="#{manageExaminationsController.selectedEntity.date}"
-								size="10" required="true"
-								disabled="#{manageExaminationsController.readOnly}">
-								<p:ajax event="blur" update="dateField" />
-								<f:convertDateTime type="date"
-									pattern="#{msgs['format.date.java']}" />
-								<h:outputText value=" (#{msgs['format.date.label']})" />
-							</p:inputMask>
-						</ui:decorate>
-					</h:panelGroup>
+
+
+
+
+
+
+					<p:dataTable id="checkboxDiseases" var="dEntity"
+						value="#{manageDiseasesController.lazyEntities}"
+						rows="#{manageDiseasesController.maxDataTableRowsPerPage}"
+						rowsPerPageTemplate="#{manageDiseasesController.halfMaxDataTableRowsPerPage},#{manageDiseasesController.maxDataTableRowsPerPage},#{manageDiseasesController.doubleMaxDataTableRowsPerPage}"
+						style="width:850px;" lazy="true" paginator="true"
+						selection="#{manageExaminationsController.selectedDiseases}"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						paginatorPosition="bottom"
+						loadingMessage="#{msgs['text.ajax.loading']}">
+						<f:facet name="header">
+            Diseases
+        </f:facet>
+						<p:column selectionMode="multiple"
+							style="width:16px;text-align:center" />
+						<p:column headerText="Name">
+							<h:outputText value="#{dEntity.name}" />
+						</p:column>
+						<p:column headerText="Reference">
+							<h:outputText value="#{dEntity.referenceResource}" />
+						</p:column>
+
+
+					</p:dataTable>
+
+
+					<p:dataTable id="checkboxDrugs" var="dEntity"
+						value="#{manageDrugsController.lazyEntities}"
+						rows="#{manageDrugsController.maxDataTableRowsPerPage}"
+						rowsPerPageTemplate="#{manageDrugsController.halfMaxDataTableRowsPerPage},#{manageDrugsController.maxDataTableRowsPerPage},#{manageDrugsController.doubleMaxDataTableRowsPerPage}"
+						style="width:850px;" lazy="true" paginator="true"
+						selection="#{manageExaminationsController.selectedDrugs}"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						paginatorPosition="bottom"
+						loadingMessage="#{msgs['text.ajax.loading']}">
+						<f:facet name="header">
+            Drugs
+        </f:facet>
+						<p:column selectionMode="multiple"
+							style="width:16px;text-align:center" />
+						<p:column headerText="Name">
+							<h:outputText value="#{dEntity.name}" />
+						</p:column>
+						<p:column headerText="Reference">
+							<h:outputText value="#{dEntity.referenceResource}" />
+						</p:column>
+
+
+					</p:dataTable>
+
 
 					<h:panelGroup id="listingDoctor" styleClass="listing">
 						<p:dataTable widgetVar="listingTable"
@@ -133,9 +134,9 @@
 							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 							paginatorPosition="bottom"
 							loadingMessage="#{msgs['text.ajax.loading']}">
-<!-- 							emptyMessage="#{manageDoctorsController.filtering ? msgs['manageSemesters.text.noEntitiesFiltered'] : msgs['manageSemesters.text.noEntities']}"> -->
-							
-							
+							<!-- 							emptyMessage="#{manageDoctorsController.filtering ? msgs['manageSemesters.text.noEntitiesFiltered'] : msgs['manageSemesters.text.noEntities']}"> -->
+
+
 							<p:column headerText="First Name">
 								<h:outputText value="#{dEntity.firstName}" />
 							</p:column>
@@ -158,41 +159,41 @@
 							<!-- 							<p:ajax event="rowSelect" update="#{manageExaminationsController.selectedEntity.patient = manageDoctorsController.selectedEntity}" /> -->
 						</p:dataTable>
 
-					<h:panelGroup id="listingPatient" styleClass="listing">
-						<p:dataTable widgetVar="listingTable"
-							value="#{managePatientsController.lazyEntities}" var="pEntity"
-							rows="#{managePatientsController.maxDataTableRowsPerPage}"
-							rowsPerPageTemplate="#{managePatientsController.halfMaxDataTableRowsPerPage},#{managePatientsController.maxDataTableRowsPerPage},#{managePatientsController.doubleMaxDataTableRowsPerPage}"
-							style="width:850px;" lazy="true" paginator="true"
-							selection="#{manageExaminationsController.selectedPatient}"
-							selectionMode="single"
-							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-							paginatorPosition="bottom"
-							loadingMessage="#{msgs['text.ajax.loading']}">
-<!-- 							emptyMessage="#{managePatientsController.filtering ? msgs['manageSemesters.text.noEntitiesFiltered'] : msgs['manageSemesters.text.noEntities']}"> -->
+						<h:panelGroup id="listingPatient" styleClass="listing">
+							<p:dataTable widgetVar="listingTable"
+								value="#{managePatientsController.lazyEntities}" var="pEntity"
+								rows="#{managePatientsController.maxDataTableRowsPerPage}"
+								rowsPerPageTemplate="#{managePatientsController.halfMaxDataTableRowsPerPage},#{managePatientsController.maxDataTableRowsPerPage},#{managePatientsController.doubleMaxDataTableRowsPerPage}"
+								style="width:850px;" lazy="true" paginator="true"
+								selection="#{manageExaminationsController.selectedPatient}"
+								selectionMode="single"
+								paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+								paginatorPosition="bottom"
+								loadingMessage="#{msgs['text.ajax.loading']}">
+								<!-- 							emptyMessage="#{managePatientsController.filtering ? msgs['manageSemesters.text.noEntitiesFiltered'] : msgs['manageSemesters.text.noEntities']}"> -->
 
-							<p:column headerText="First Name">
-								<h:outputText value="#{pEntity.firstName}" />
-							</p:column>
-							<p:column headerText="Surname">
-								<h:outputText value="#{pEntity.surname}" />
-							</p:column>
-							<p:column headerText="Birth Date" style="width:75px;">
-								<h:outputFormat value="#{pEntity.birthDate}">
-									<f:convertDateTime type="both"
-										pattern="#{msgs['format.date.java']}" />
-								</h:outputFormat>
-							</p:column>
-							<p:column headerText="City">
-								<h:outputText value="#{pEntity.address.city}" />
-							</p:column>
-							<p:column headerText="State">
-								<h:outputText value="#{pEntity.address.state}" />
-							</p:column>
+								<p:column headerText="First Name">
+									<h:outputText value="#{pEntity.firstName}" />
+								</p:column>
+								<p:column headerText="Surname">
+									<h:outputText value="#{pEntity.surname}" />
+								</p:column>
+								<p:column headerText="Birth Date" style="width:75px;">
+									<h:outputFormat value="#{pEntity.birthDate}">
+										<f:convertDateTime type="both"
+											pattern="#{msgs['format.date.java']}" />
+									</h:outputFormat>
+								</p:column>
+								<p:column headerText="City">
+									<h:outputText value="#{pEntity.address.city}" />
+								</p:column>
+								<p:column headerText="State">
+									<h:outputText value="#{pEntity.address.state}" />
+								</p:column>
 
-							<!-- 							<p:ajax event="rowSelect" update="#{manageExaminationsController.selectedEntity.patient = managePatientsController.selectedEntity}" /> -->
-						</p:dataTable>
-					</h:panelGroup>
+								<!-- 							<p:ajax event="rowSelect" update="#{manageExaminationsController.selectedEntity.patient = managePatientsController.selectedEntity}" /> -->
+							</p:dataTable>
+						</h:panelGroup>
 
 
 						<p:hotkey bind="ctrl+left" handler="goToFirstPage(listingTable);" />
@@ -203,7 +204,8 @@
 
 					<ui:decorate
 						template="/resources/templates/default/formbutton.xhtml">
-						<h:panelGroup rendered="#{! manageExaminationsController.readOnly}">
+						<h:panelGroup
+							rendered="#{! manageExaminationsController.readOnly}">
 							<p:commandButton action="#{manageExaminationsController.list}"
 								value="#{msgs['crud.button.cancel']}" immediate="true"
 								icon="buttonCancel" />

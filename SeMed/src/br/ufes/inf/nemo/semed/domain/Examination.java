@@ -1,7 +1,7 @@
 package br.ufes.inf.nemo.semed.domain;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -20,25 +20,29 @@ public class Examination extends PersistentObjectSupport implements Comparable<E
 
 	private String simptomsAndObservations;
 	private String medicePrescription;
-	@Temporal(TemporalType.DATE) private Date date;
-	
-	@ManyToOne private Patient patient;
-	@ManyToOne private Doctor doctor;
-	
-	@ManyToMany @JoinTable(
-			name="examination_drug", 
-					joinColumns={@JoinColumn(name="examination_id", referencedColumnName="uuid")}, 
-					inverseJoinColumns={@JoinColumn(name="drug_id", referencedColumnName="uuid")})
-	private Set<Drug> drugs;
-	
-	@ManyToMany @JoinTable(
-			name="examination_disease", 
-			joinColumns={@JoinColumn(name="examination_id", referencedColumnName="uuid")}, 
-			inverseJoinColumns={@JoinColumn(name="disease_id", referencedColumnName="uuid")})
-	private Set<Disease> diseases;
-	
-	private String disease;
-	private String diseaseDetail;
+	@Temporal(TemporalType.DATE)
+	private Date date;
+
+	@ManyToOne
+	private Patient patient;
+	@ManyToOne
+	private Doctor doctor;
+
+	@ManyToMany
+	@JoinTable(name = "examination_drug", joinColumns = {
+			@JoinColumn(name = "examination_id", referencedColumnName = "uuid") }, inverseJoinColumns = {
+					@JoinColumn(name = "drug_id", referencedColumnName = "uuid") })
+	private List<Drug> drugs;
+
+	@ManyToMany
+	@JoinTable(name = "examination_disease", joinColumns = {
+			@JoinColumn(name = "examination_id", referencedColumnName = "uuid") }, inverseJoinColumns = {
+					@JoinColumn(name = "disease_id", referencedColumnName = "uuid") })
+	private List<Disease> diseases;
+
+	/*
+	 * private String disease; private String diseaseDetail;
+	 */
 
 	public Examination() {
 		setDate(new Date());
@@ -83,39 +87,33 @@ public class Examination extends PersistentObjectSupport implements Comparable<E
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
-	
-	public Set<Drug> getDrugs() {
+
+	public List<Drug> getDrugs() {
 		return drugs;
 	}
 
-	public void setDrugs(Set<Drug> drugs) {
+	public void setDrugs(List<Drug> drugs) {
 		this.drugs = drugs;
 	}
 
-	public Set<Disease> getDiseases() {
+	public List<Disease> getDiseases() {
 		return diseases;
 	}
 
-	public void setDiseases(Set<Disease> diseases) {
+	public void setDiseases(List<Disease> diseases) {
 		this.diseases = diseases;
 	}
 
-	public String getDisease() {
-		return disease;
-	}
-
-	public void setDisease(String disease) {
-		this.disease = disease;
-	}
-
-	public String getDiseaseDetail() {
-		return diseaseDetail;
-	}
-
-	public void setDiseaseDetail(String diseaseDetail) {
-		this.diseaseDetail = diseaseDetail;
-	}
-
+	/*
+	 * public String getDisease() { return disease; }
+	 * 
+	 * public void setDisease(String disease) { this.disease = disease; }
+	 * 
+	 * public String getDiseaseDetail() { return diseaseDetail; }
+	 * 
+	 * public void setDiseaseDetail(String diseaseDetail) { this.diseaseDetail =
+	 * diseaseDetail; }
+	 */
 	@Override
 	public int compareTo(Examination o) {
 		if (o == null || o.getId() == null)
